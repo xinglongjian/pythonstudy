@@ -1,0 +1,141 @@
+body {
+  font-size: 14px;
+  padding-bottom: 70px; 
+  padding-top: 70px;
+}
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: helvetica, arial, sans-serif;
+}
+.spacer {
+  margin: 3em 0;
+}
+.jumbotron {
+  background: #f0f0f0;
+  background-image: url(../img/stock-mba1.jpg);
+  background-size: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: #333;
+  padding-top: 2em;
+  height: 500px;
+  text-align: left;
+  margin: 0;
+}
+.jumbotron h1 {
+  background: #fff;
+  display: inline-block;
+  font-size: 1.5em;
+  margin-bottom: 0;
+  padding: 0.5em;
+  text-transform: uppercase;
+}
+.jumbotron h2 {
+  background: #fff;
+  color: #333;
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: normal;
+  padding: 0.75em 1.1em;
+  line-height: 1.4em;
+  max-width: 66%;
+}
+footer {
+  background: #111;
+  color: #fff;
+  padding: 1.2em 0 0.6em;
+  margin-top: 3em;
+}
+@media screen and (max-width: 1200px) {
+  .jumbotron {
+    height: 350px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .jumbotron {
+    height: 300px;
+    padding-top: 1em;
+  }
+  .feature-photo {
+    margin: 0.1em 0;
+  }
+  .jumbotron h2 {
+    max-width: 100%;
+  }
+  .navbar ul.nav li {
+    text-align: center;
+  }
+  .navbar ul.nav li button {
+    margin: 1em 0;
+  }
+  .media-benefit {
+    margin-bottom: 2em;
+  }
+}
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+  .jumbotron {
+    font-size: 12px;
+    height: 150px;
+    padding-top: 0.1em;
+  }
+  footer .pull-right {
+    display: none;
+  }
+}
+
+.wrapper {
+  background: #fff;
+}
+
+/*Header Default
+------------------------------------*/
+.header {
+	z-index: 99;
+	position: relative;
+	border-bottom: solid 2px #eee;
+}
+
+.header .navbar {
+	margin: 0;
+	min-height: inherit;
+}
+
+.topbar {
+	z-index: 12;
+	padding: 8px 0;
+	position: relative;
+}
+
+.topbar ul.loginbar {
+	margin: 0;
+}
+
+.topbar ul.loginbar > li {
+	display: inline;
+	list-style: none;
+	position: relative;
+	padding-bottom: 15px;
+}
+
+.topbar ul.loginbar > li > a, 
+.topbar ul.loginbar > li > a:hover {
+	color: #7c8082;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+
+.topbar ul.loginbar li i.fa { 
+	color: #bbb;
+}
+
+.topbar ul.loginbar li.topbar-devider { 
+	top: -1px;
+	padding: 0;
+	font-size: 8px;
+	position: relative;
+	margin: 0 9px 0 5px;
+	font-family: Tahoma;
+	border-right: solid 1px #bbb;
+}

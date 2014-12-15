@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,6 +29,7 @@ ALLOWED_HOSTS = []
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -37,6 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls',
+    'home',
+    'designpattern',
+    'visualization',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +55,16 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+# in terminal
+# python manager.py shell
+# from pythonstudy.settings import TEMPLATE_DIRS
+# print TEMPLATE_DIRS
+# ['/home/ubuntu/workspace/templates']
+
+#TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'polls/templates')]
+TEMPLATE_LOADERS = (
+    'django.template.loaders.app_directories.Loader',
+)
 ROOT_URLCONF = 'pythonstudy.urls'
 
 WSGI_APPLICATION = 'pythonstudy.wsgi.application'
@@ -86,3 +102,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+   os.path.join(BASE_DIR, "static"),
+)

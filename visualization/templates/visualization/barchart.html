@@ -1,0 +1,45 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/visualleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">【条形图】【Bar Chart】数据内容</div>
+        <div class="panel-body">
+           Panel content
+        </div>
+    </div>
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        直方图和条形图的区别:<br/>
+        首先，条形图是用条形的长度表示各类别频数的多少，其宽度（表示类别）则是固定的；直方图是用面积表示各组频数的多少，矩形的高度表示每一组的频数或频率，宽度则表示各组的组距，因此其高度与宽度均有意义。        其次，由于分组数据具有连续性，直方图的各矩形通常是连续排列，而条形图则是分开排列。
+        最后，条形图主要用于展示分类数据，而直方图则主要用于展示数据型数据
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
+        <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">..1.</div>
+        <div role="tabpanel" class="tab-pane" id="profile">.2..</div>
+        <div role="tabpanel" class="tab-pane" id="messages">.3..</div>
+        <div role="tabpanel" class="tab-pane" id="settings">.4..</div>
+    </div>
+</div> 
+{% endblock %}

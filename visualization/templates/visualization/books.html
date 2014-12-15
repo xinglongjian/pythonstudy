@@ -1,0 +1,72 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/visualleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static 'images/interactive_data_visualization_for_the_web.jpg' %}" alt="Interactive Data Visualization for the Web" height="200px" width="240px">
+                <div class="caption">
+                    <h3>Interactive Data Visualization for the Web</h3>
+                    <p>Create and publish your own interactive data visualization projects on the Web, even if you have no experience with either web development or data visualization. It's easy with this hands-on guide. You'll start with an overview of data visualization concepts and simple web technologies, and then...</p>
+                    <p><a href="http://pan.baidu.com/s/1pJofrTL" class="btn btn-primary" role="button">Download</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static 'images/create_web_charts_with_jqplot.jpg' %}" alt="Interactive Data Visualization for the Web" height="200px" width="240px">
+                <div class="caption">
+                    <h3>Create Web Charts with jqPlot</h3>
+                    <p>Create Web Charts with jqPlotshows how to convert your data into eye-catching, innovative, animated, and highly interactive browser-based charts. This book is suitable for developers of all experience levels and needs: for those who love fast and effective solutions, you can use the jqPlot library to generate charts with amazing effects and animations using only a few lines of code.</p>
+                    <p><a href="http://pan.baidu.com/s/1i3IdKjV" class="btn btn-primary" role="button">Download</a> </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static 'images/data_visualization_a_successful_design_process.jpg' %}" alt="Interactive Data Visualization for the Web" height="200px" width="240px">
+                <div class="caption">
+                    <h3>Data Visualization A Successful Design Process</h3>
+                    <p>Do you want to create more attractive charts? Or do you have huge data sets and need to unearth the key insights in a visual manner? Data visualization is the representation and presentation of data, using proven design techniques to bring alive the patterns, stories and key insights locked away. Data Visualization: ...</p>
+                    <p><a href="http://pan.baidu.com/s/1i3h5W9J" class="btn btn-primary" role="button">Download</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static 'images/create_web_charts_with_d3.jpg' %}" alt="Interactive Data Visualization for the Web" height="200px" width="240px">
+                <div class="caption">
+                    <h3>Create Web Charts with D3</h3>
+                    <p>Create Web Charts with D3 shows how to convert your data into eye-catching, innovative, animated, and highly interactive browser-based charts. This book is suitable for developers of all experience levels and needs: if you want power and control and need to create data visualization beyond traditional charts, then D3 is the JavaScript library for you.</p>
+                    <p><a href="http://pan.baidu.com/s/1i3KL85v" class="btn btn-primary" role="button">Download</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="{% static 'images/beginning_javascript_charts.jpg' %}" alt="Interactive Data Visualization for the Web" height="200px" width="240px">
+                <div class="caption">
+                    <h3>Beginning Javascript Charts</h3>
+                    <p>Beginning JavaScript Charts shows how to convert your data into eye-catching, innovative, animated, and highly interactive browser-based charts. This book is suitable for developers of all experience levels and needs: for those who love fast and effective solutions, you can use the jqPlot library to generate charts with amazing effects and animations using only a few lines of code; ...</p>
+                    <p><a href="http://pan.baidu.com/s/1eQqz4dG" class="btn btn-primary" role="button">Download</a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock %}

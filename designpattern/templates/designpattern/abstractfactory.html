@@ -1,0 +1,28 @@
+{% extends "home/base.html" %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "designpattern/designleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="jumbotron">
+        <h3>Abstract Factory(抽象工厂模式):</h3>
+        <p>设计模式是在编程过程中形成的能够解决某一类问题的最佳实践。每一种设计模式都是针对特定问题的解决方案。
+        熟练掌握设计模式，能够对软件设计过程中遇到的问题提供一种新思路，基于设计模式的软件架构，具有高扩展性、可维护性、
+        可用性等优点。</p>
+        <p>设计模式不是Python独有的，其他编程语言如：java、php、C#等都有相应的设计模式，基本思想都是一样的。</p>
+        <p>主要参考:<a href="https://github.com/faif/python-patterns">https://github.com/faif/python-patterns</a></p>
+        <p><a class="btn btn-primary btn-sm" href="#" role="button">Learn more</a></p>
+    </div>
+</div> 
+{% endblock %}

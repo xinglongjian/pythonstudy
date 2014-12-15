@@ -1,0 +1,34 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand nav-link" href="#top">PythonStudy</a>
+    </div> <!-- /.navbar-header -->
+        
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="{% ifequal menu 'home' %}active{% endifequal %}">
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="{% ifequal menu 'pattern' %}active{% endifequal %}">
+                <a href="{% url 'designpattern:index' %}">设计模式</a>
+            </li>
+            <li class="dropdown">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">数据挖掘<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                  <li class="active"><a href="index.html">文本挖掘</a></li>
+                  <li><a target="_blank" href="One-Page/index.html">视频挖掘</a></li>                                
+                  <li><a href="page_home1.html">Option 3: Layer Slider</a></li>
+              </ul>
+            </li>
+           <li class="{% ifequal menu 'visualization' %}active{% endifequal %}"><a href="{% url 'visualization:index' %}">数据可视化</a></li>
+            <li><a href="#">关于我</a></li>
+            <li><a href="{:U('Index/gotoAdmin')}">留言</a></li>
+          </ul>
+    </div> <!-- /.navbar-collapse -->
+</div>
+</nav>

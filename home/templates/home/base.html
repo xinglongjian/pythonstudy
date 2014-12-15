@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"> 
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/Uniform.js/2.1.2/themes/default/css/uniform.default.min.css" rel="stylesheet">
+	<link href="http://cdn.bootcss.com/bootstrap-switch/3.0.2/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+    {% load staticfiles %}
+    <link href="{% static "css/style.css" %}" rel="stylesheet"/>
+    <!--引入每个页面的独立css文件-->
+    {% block csslink %}{% endblock %}
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>{% block title %}Python学习{% endblock %}</title>
+    <style type="text/css">
+        body { padding-bottom: 70px; padding-top: 70px; }
+    </style>
+</head>
+<body>
+<div class="wrapper">    
+<!--导航开始-->
+{% block header %}
+{% include "home/header.html" %}
+{% endblock %}
+<!--导航结束-->
+<div class="spacer"></div>
+<div class="container">
+    <div class="row">
+        <!--首页左侧-开始-->
+        {% block leftContent %}
+        <div class="col-md-8 col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        <!--col-md-8-->
+        <!--首页左侧-结束-->
+        {% block rightContent %}
+        <div class="col-md-4 col-sm-6 feature-text">
+           
+        </div> <!-- /.feature-text -->
+        {% endblock %}
+    </div> <!-- /.row -->
+</div>
+
+<!--Footer 开始-->
+{% block footer %}
+{% include "home/footer.html" %}
+{% endblock %}
+<!--Footer 结束-->
+</div>
+<!--JavaScript-->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!--引入每个页面的独立js文件-->
+{% block jslink %}{% endblock %}
+</body>
+</html>    
+
