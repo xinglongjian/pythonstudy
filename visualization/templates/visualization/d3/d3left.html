@@ -1,0 +1,24 @@
+<ul class="nav nav-list" id="sidemenu">
+   <li class="list-group-item {% ifequal submenu 'index' %}active{% endifequal %}"><a href="{% url 'visualization:d3index' %}" >概览</a></li>  
+   <li class="list-group-item {% ifequal submenu 'api' %}active{% endifequal %}"><a data-toggle="collapse" aria-expanded="false" aria-controls="apirefer" data-target="#apirefer">API引用<span class="caret pull-right"></a></li>  
+   <div id="apirefer" class="collapse bolder {% ifequal submenu 'api' %}in{% endifequal %}">
+        <ul class="list-group nobuttom">
+          <li class="list-group-item {% ifequal collmenu 'core' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Core</a></li>
+          <li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Scales</a></li>
+          <li class="list-group-item {% ifequal collmenu 'svg' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_svg'%}">SVG</a></li>
+          <!--<li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Time</a></li>
+          <li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Layouts</a></li>
+          <li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Geography</a></li>
+          <li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Geometry</a></li>
+          <li class="list-group-item {% ifequal collmenu 'index' %}subactive{% endifequal %}"><a href="{% url 'visualization:api_core'%}">Behaviors</a></li>
+          -->
+        </ul>  
+   </div > 
+   <!--
+   <li class="list-group-item {% ifequal submenu 'indeddx' %}active{% endifequal %}"><a href="{% url 'visualization:d3index' %}" >概览</a></li>
+   <li class="list-group-item {% ifequal submenu 'indeddx' %}active{% endifequal %}"><a href="{% url 'visualization:d3index' %}" >概览</a></li>
+   <li class="list-group-item {% ifequal submenu 'indeddx' %}active{% endifequal %}"><a href="{% url 'visualization:d3index' %}">概览</a></li>
+   -->
+</ul> 
+ 
+ 

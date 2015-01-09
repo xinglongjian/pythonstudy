@@ -1,0 +1,105 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/d3/d3left.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="alert alert-info" role="alert"><strong>SVG</strong>  utilities for creating Scalable Vector Graphics。</div>
+    
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#shapes" role="tab" data-toggle="tab">Shapes</a></li>
+        <li role="presentation"><a href="#axes" role="tab" data-toggle="tab">Axes</a></li>
+        <li role="presentation"><a href="#controls" role="tab" data-toggle="tab">Controls</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="shapes">
+            <div class="alert alert-success" role="alert">
+               selection是一个元素的数组。D3绑定了一些方法在该数组上以便对所选择的元素操作。每个selection是一个二维数组。
+               单个元素的获取也需要使用[[node]]方法。
+            </div>
+            <ul class="nav nav-tabs nav-stacked col-md-3" role="tablist">
+                <li role="presentation" class="active"><a href="#d3select" role="tab" data-toggle="tab">d3.select</a></li>
+            </ul>
+            <div class="tab-content col-md-9">
+                <div role="tabpanel" class="tab-pane active" id="d3select">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>d3.select</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">从当前文档中选择一个元素。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">d3.select(selector)</span>
+                                <div class="alert alert-success" role="alert">
+                                   selector为class名，选择匹配特定选择符的第一个元素。如果有则返回单个元素的selection,如果没有匹配，则返回空的selection。
+                                  如果匹配了多个元素，则返回第一个。
+                                </div>
+                                <p class="bg-info">
+                                 HTML代码：
+                                 <pre class="prettyprint Lang-html">
+                               &lt;div class="mydiv">&lt;/div>
+                                 </pre>
+                                </p>
+                                <p class="bg-info">
+                                JS代码:
+                                <pre class="prettyprint Lang-js">
+                                var div=d3.select('mydiv');
+                                </pre>
+                                </p>
+                            </div>
+                            <div class="well">
+                        <span class="glyphicon glyphicon-asterisk">d3.select(node)</span>
+                        <div class="alert alert-success" role="alert">
+                            选择特定的node。如果已经有了某个node的引用时使用该方法比较方便，如：可以在监听器中使用
+                            <strong>d3.select(this)</strong>.
+                        </div>
+                        <p class="bg-info">
+                            HTML代码：
+                            <pre class="prettyprint Lang-html">
+                               &lt;div>&lt;/div>
+                            </pre>
+                        </p>
+                        <p class="bg-info">
+                            JS代码:
+                            <pre class="prettyprint Lang-js">
+                               var div=d3.select('div');
+                            </pre>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--panel结束-->
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="axes">.2..</div>
+        <div role="tabpanel" class="tab-pane" id="controls">.3..</div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink%}
+<script src="{% static "plugins/google_code_prettify/run_prettify.js" %}" charset="utf-8"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+    });
+</script>
+{% endblock %}

@@ -40,9 +40,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'blogs',
     'home',
     'designpattern',
     'visualization',
+    'dataanalysis',
+    'machinelearing',
+    'webcrawler',
 )
 
 MIDDLEWARE_CLASSES = (

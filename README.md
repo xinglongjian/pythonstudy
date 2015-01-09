@@ -5,8 +5,8 @@ Welcome to your Django project on Cloud9 IDE!
 
 Your Django project is already fully setup. Just click the "Run" button to start
 the application. On first run you will be asked to create an admin user. You can
-access your application from 'https://pythonstudy-xinglongjian1.c9.io/' and the admin page from 
-'https://pythonstudy-xinglongjian1.c9.io/admin'.
+access your application from 'http://pythonstudy-xinglongjian1.c9.io/' and the admin page from 
+'http://pythonstudy-xinglongjian1.c9.io/admin'.
 
 ## Starting from the Terminal
 

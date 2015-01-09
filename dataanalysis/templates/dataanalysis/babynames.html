@@ -1,0 +1,77 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block csslink %}
+<link href="{% static "plugins/google_code_prettify/prettify.css" %}" rel="stylesheet"/>
+<link href="{% static "plugins/jsonFormater/jsonFormater.css" %}" rel="stylesheet"/>
+{% endblock %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "dataanalysis/analysisleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">数据源</div>
+        <div class="panel-body">
+            美国社会安全管理局（SSA）提供了的从1880到2010年婴儿名字的频率数据。通过这些数据，可以实现：<br/>
+            1、给定一个名字，能够绘制随着时间的变化该名字的比例<br/>
+            2、确定每年最受欢迎的名字和每年增加最多或减少最多的名字<br/>
+            3、针对名字的分析趋势，比如：元音、辅音、长度、第一个和最后一个字母等<br/>
+        </div>
+    </div>
+    <!--获取第一个值-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">加载数据</div>
+        <div class="panel-body">
+            <br/>使用pandas的read_csv()方法从数据文件中读取数据，返回pandas的DataFrame对象。
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+                    
+                </pre>
+            </div>
+        </div>
+    </div>
+    
+    <!--获取第一个值-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">分析数据</div>
+        <div class="panel-body">
+            <br/>如果要从不同的角度去对数据进行分析就需要将各个表之间的关系建立起来，可以看出用户表的user_id和等级表的user_id关联，
+            电影表的movie_id和等级表的movie_id关联，将3个表组合成一张大表。这里可以使用pandas的merge()函数。
+            <div class="alert alert-success" role="alert">
+                <strong><h4>Code：</h4></strong>
+                <pre class="prettyprint Lang-py">
+                data = pd.merge(pd.merge(ratings, users), movies)
+                </pre>
+            </div>
+        </div>
+    </div>
+   
+</div> 
+{% endblock %}
+
+{% block jslink %}
+<script src="{% static "plugins/echarts/dist/echarts.js" %}"></script>
+<script src="{% static "plugins/google_code_prettify/prettify.js" %}" charset="utf-8"></script>
+<script src="{% static "plugins/jsonFormater/jsonFormater.js" %}"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+$(document).ready(function(){
+    prettyPrint();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "webcrawler/webcrawlerleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">gmail</div>
+        <div class="panel-body">
+            {{content}}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+

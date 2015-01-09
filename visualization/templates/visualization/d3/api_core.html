@@ -1,0 +1,464 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/d3/d3left.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="alert alert-info" role="alert"><strong>Core</strong> 包含selections, transitions, data, localization, colors等。</div>
+    
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Selections" role="tab" data-toggle="tab">Selections</a></li>
+        <li role="presentation"><a href="#Transitions" role="tab" data-toggle="tab">Transitions</a></li>
+        <li role="presentation"><a href="#Arrays" role="tab" data-toggle="tab">Working with Arrays</a></li>
+        <li role="presentation"><a href="#Math" role="tab" data-toggle="tab">Math</a></li>
+        <li role="presentation"><a href="#External" role="tab" data-toggle="tab">Loading External Resources</a></li>
+        <li role="presentation"><a href="#Formatting" role="tab" data-toggle="tab">String Formatting</a></li>
+        <li role="presentation"><a href="#CSV" role="tab" data-toggle="tab">CSV Formatting</a></li>
+        <li role="presentation"><a href="#Localization" role="tab" data-toggle="tab">Localization</a></li>
+        <li role="presentation"><a href="#Colors" role="tab" data-toggle="tab">Colors</a></li>
+        <li role="presentation"><a href="#Namespaces" role="tab" data-toggle="tab">Namespaces</a></li>
+        <li role="presentation"><a href="#Internals" role="tab" data-toggle="tab">Internals</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="Selections">
+            <div class="alert alert-success" role="alert">
+               selection是一个元素的数组。D3绑定了一些方法在该数组上以便对所选择的元素操作。每个selection是一个二维数组。
+               单个元素的获取也需要使用[[node]]方法。
+            </div>
+            <ul class="nav nav-tabs nav-stacked col-md-3" role="tablist">
+                <li role="presentation" class="active"><a href="#d3select" role="tab" data-toggle="tab">d3.select</a></li>
+                <li role="presentation"><a href="#d3selectAll" role="tab" data-toggle="tab">d3.selectAll</a></li>
+                <li role="presentation"><a href="#selectionattr" role="tab" data-toggle="tab">selection.attr</a></li>
+                <li role="presentation"><a href="#selectionclassed " role="tab" data-toggle="tab">selection.classed</a></li>
+                <li role="presentation"><a href="#selectionstyle" role="tab" data-toggle="tab">selection.style</a></li>
+                <li role="presentation"><a href="#selectionproperty" role="tab" data-toggle="tab">selection.property</a></li>
+                <li role="presentation"><a href="#selectiontext" role="tab" data-toggle="tab">selection.text</a></li>
+                <li role="presentation"><a href="#selectionhtml" role="tab" data-toggle="tab">selection.html</a></li>
+                <li role="presentation"><a href="#selectionappend" role="tab" data-toggle="tab">selection.append</a></li>
+                <li role="presentation"><a href="#selectioninsert" role="tab" data-toggle="tab">selection.insert</a></li>
+                <li role="presentation"><a href="#selectionremove" role="tab" data-toggle="tab">selection.remove</a></li>
+                <li role="presentation"><a href="#selectiondata" role="tab" data-toggle="tab">selection.data</a></li>
+                <li role="presentation"><a href="#selectionenter" role="tab" data-toggle="tab">selection.enter</a></li>
+                <li role="presentation"><a href="#selectionexit" role="tab" data-toggle="tab">selection.exit</a></li>
+            </ul>
+            <div class="tab-content col-md-9">
+                <div role="tabpanel" class="tab-pane active" id="d3select">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>d3.select</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">从当前文档中选择一个元素。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">d3.select(selector)</span>
+                                <div class="alert alert-success" role="alert">
+                                   selector为class名，选择匹配特定选择符的第一个元素。如果有则返回单个元素的selection,如果没有匹配，则返回空的selection。
+                                  如果匹配了多个元素，则返回第一个。
+                                </div>
+                                <p class="bg-info">
+                                 HTML代码：
+                                 <pre class="prettyprint Lang-html">
+                               &lt;div class="mydiv">&lt;/div>
+                                 </pre>
+                                </p>
+                                <p class="bg-info">
+                                JS代码:
+                                <pre class="prettyprint Lang-js">
+                                var div=d3.select('mydiv');
+                                </pre>
+                                </p>
+                            </div>
+                            <div class="well">
+                        <span class="glyphicon glyphicon-asterisk">d3.select(node)</span>
+                        <div class="alert alert-success" role="alert">
+                            选择特定的node。如果已经有了某个node的引用时使用该方法比较方便，如：可以在监听器中使用
+                            <strong>d3.select(this)</strong>.
+                        </div>
+                        <p class="bg-info">
+                            HTML代码：
+                            <pre class="prettyprint Lang-html">
+                               &lt;div>&lt;/div>
+                            </pre>
+                        </p>
+                        <p class="bg-info">
+                            JS代码:
+                            <pre class="prettyprint Lang-js">
+                               var div=d3.select('div');
+                            </pre>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="d3selectAll">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>d3.selectAll</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">从当前文档中所有匹配元素。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">d3.selectAll(selector)</span>
+                                <div class="alert alert-success" role="alert">
+                                   selector为class名，选择匹配特定选择符的所有元素。如果没有匹配，则返回空的selection。
+                                </div>
+                                <p class="bg-info">
+                                 HTML代码：
+                                 <pre class="prettyprint Lang-html">
+                               &lt;div class="mydiv">&lt;/div>
+                               &lt;div class="mydiv">&lt;/div>
+                                 </pre>
+                                </p>
+                                <p class="bg-info">
+                                JS代码:
+                                <pre class="prettyprint Lang-js">
+                                var divs=d3.selectAll('mydiv');
+                                </pre>
+                                </p>
+                            </div>
+                            <div class="well">
+                        <span class="glyphicon glyphicon-asterisk">d3.select(node)</span>
+                        <div class="alert alert-success" role="alert">
+                            选择特定的node。如果已经有了某个node的引用时使用该方法比较方便，如：可以在监听器中使用
+                            <strong>d3.selectAll(this.childNodes)</strong>.
+                        </div>
+                        <p class="bg-info">
+                            HTML代码：
+                            <pre class="prettyprint Lang-html">
+                               &lt;div>&lt;/div>&lt;div>&lt;/div>
+                            </pre>
+                        </p>
+                        <p class="bg-info">
+                            JS代码:
+                            <pre class="prettyprint Lang-js">
+                               var divs=d3.selectAll('div');
+                            </pre>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionattr">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.attr(name[,value])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素进行属性操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.attr(name[,value])</span>
+                                <div class="alert alert-success" role="alert">
+                                   如果value指定，则是对匹配的所有元素的name属性设置value值。如果value为常量，则所有元素设置一样的属性值。
+                                   如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。函数的返回值为该元素的属性值。
+                                   
+                                   如果value未指定，则返回selections中第一个非null元素的属性值。
+                                </div>
+                                <p class="bg-info">
+                                 HTML代码：
+                                 <pre class="prettyprint Lang-html">
+                               &lt;div class="mydiv" name="myname">&lt;/div>
+                                 </pre>
+                                </p>
+                                <p class="bg-info">
+                                JS代码:
+                                <pre class="prettyprint Lang-js">
+                                var name=d3.select('mydiv').attr('name');
+                                #name=myname
+                                </pre>
+                                </p>
+                            </div>
+                        </div>
+                  </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionclassed">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.classed(name[,value])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的class属性操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.classed(name[,value])</span>
+                                <div class="alert alert-success" role="alert">
+                                   如果value指定，表示是否名称为name的class应用到该元素上。如果value为常量或true，如果元素未分配该class则分配。
+                                   如果value为false，如果元素已分配该class则移除。如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。
+                                   函数的返回值则表示该class是否应用到该元素上。
+                                   如果value未指定，则返回selections中第一个非null元素的class属性是否包含该class。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                   如果一次指定多个class可以这样：selection.classed({'foo': true, 'bar': false}) 或selection.classed('foo bar', true)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionstyle">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.style(name[,value[,priority]])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的CSS style属性操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.style(name[,value[,priority]])</span>
+                                <div class="alert alert-success" role="alert">
+                                   如果value指定，表示将指定的name名和value值应用到选择元素的style属性上。
+                                   如果value为常量，表示所有匹配元素应用相同的style值。
+                                   如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。
+                                   函数的返回值则应用到该元素style属性上。
+                                   
+                                   可选项priority可以为null或‘important’。
+                                   如果value未指定，则返回selections中第一个非null元素的style属性上第一个值。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                   如果一次指定多个style可以这样：selection.style({'stroke': 'black', 'stroke-width': 2})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionproperty">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.property(name[,value])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的属性操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.property(name[,value])</span>
+                                <div class="alert alert-success" role="alert">
+                                    官网说，有些html元素的属性不能用标准方式selection.attr()访问，如input的value属性，checkbox的checked布尔属性
+                                    我测试了一下，用attr也能获取value值，用attr获取checked属性为空，用property获取checked属性为true。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    如果value指定，表示将指定的value值应用到选择元素的name名属性上。
+                                    如果value为常量，表示所有匹配元素的name属性应用相同的value值。
+                                    如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。
+                                    函数的返回值则应用到该元素name属性上。
+                                   
+                                    如果value未指定，则返回selections中第一个非null元素的name属性值。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectiontext">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.text([value])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的文本操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.text([value])</span>
+                                <div class="alert alert-success" role="alert">
+                                    text操作符基于textContent属性，执行text操作将替换元素的所有子元素。
+                                    
+                                    如果value指定，表示将指定的value值应用到选择元素的文本内容上。
+                                    如果value为常量，表示所有匹配元素的文本内容都为相同的value值。
+                                    如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。
+                                    函数的返回值则应用到该元素文本内容上。
+                                    如果为null，则清空该元素的文本内容。
+                                   
+                                    如果value未指定，则返回selections中第一个非null元素的文本值。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionhtml">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.html([value])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的html操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.html([value])</span>
+                                <div class="alert alert-success" role="alert">
+                                    html操作符基于innerHTML属性，执行html操作将替换元素的所有子元素。
+                                    也可以通过append和insert操作符创建html。
+                                    
+                                    如果value指定，表示将指定的value值应用到选择元素的html内容上。
+                                    如果value为常量，表示所有匹配元素的html内容都为相同的value值。
+                                    如果value为函数，则函数应用于每个选择的元素，通过传递数据d，索引i，和this上下文。
+                                    函数的返回值则应用到该元素html内容上。
+                                    如果为null，则清空该元素的html内容。
+                                   
+                                    如果value未指定，则返回selections中第一个非null元素的html值。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    注意:html操作符只能针对html文档操作，SVG和非html格式不能应用与此操作符。或者可以考虑<strong>innersvg polyfill</strong>,
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionappend">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.append([name])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的附加操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.append([name])</span>
+                                <div class="alert alert-success" role="alert">
+                                    添加名称为name的新元素到所有匹配元素的末尾。返回添加完后的新的selection。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    name为一个字符串或一个函数。当为一个string时，可以一个形如“namespace:tag”的带有命名空间前缀的string。
+                                    如:‘svg:text’表示在SVG命名空间创建一个text元素。D3支持svg, xhtml, xlink, xml and xmlns命名空间。其他的
+                                    命名空间可以通过d3.ns.prefix注册。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectioninsert">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.insert(name[,before])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的插入操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.insert(name[,before])</span>
+                                <div class="alert alert-success" role="alert">
+                                    在匹配选择符bofore元素<strong>之前</strong>插入名称为name的新元素。然后返回一个包含插入元素的新selection。
+                                    如果bofore选择符没有匹配任何元素，那么就作为最后一个元素插入，和append一样。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    name为一个字符串或一个函数。当为一个string时，可以一个形如“namespace:tag”的带有命名空间前缀的string。
+                                    如:‘svg:text’表示在SVG命名空间创建一个text元素。D3支持svg, xhtml, xlink, xml and xmlns命名空间。其他的
+                                    命名空间可以通过d3.ns.prefix注册。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                    bofore选择符可以是一个字符串或一个函数，函数返回一个DOM元素,假如有多个li，如果bofore为
+                                    li，那么选择的是第一个li，如果选择第三个li，可以使用“li:nth-child(2)”。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionremove">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.remove()</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">从当前文档中移除所有匹配的元素。</div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectiondata">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.data([values[,key]])</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">对所选择元素的数据操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.data([values[,key]])</span>
+                                <div class="alert alert-success" role="alert">
+                                    将指定的数据数组添加到当前selection。指定的values为数据数组(number或objects)。如果key函数未指定，
+                                    则values中的第一个值分配给第一个元素，第二个值分配给第二个元素，以此类推。当数据分配给元素时，数据存储在
+                                    元素的__data__属性上。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                   data操作符的结果是update的selection。表示选择的DOM元素成功的绑定了数据。该update的selection包含一个enter或
+                                   exit的selection的引用。用于添加或移除对应节点的数据。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                   key函数用来控制数据如何添加到元素上。这取代了通过index来添加的行为。key函数在数据数组中的每个元素上调用一次
+                                   。并再次对每个匹配的元素上调用一次。这两种情况key函数都传入数据d和索引i。当key函数用来处理数据数组时，
+                                   this上下文表示数据数组；当key函数用来处理DOM元素时，this上下文表示DOM元素。key函数返回一个string，用来添加到元素中
+                                   。
+                                   
+                                   已经存在的DOM元素不会自动排序，需要使用sort或order。
+                                </div>
+                                <div class="alert alert-success" role="alert">
+                                   values数组为选择的每个组指定一组数据。如果selection有多个组(通过d3.selectAll()或selection.selectAll()).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionenter">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.enter()</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">当数据集数目>选择元素数目时操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.enter()</span>
+                                <div class="alert alert-success" role="alert">
+                                    返回enter的selection。这是一个占位节点。当数据集中的每个数据在当前选择中找不到DOM元素时就会创建占位符。
+                                    该方法只在update selection中使用，也就是在data操作之后使用。enter的selection只能定义append、insert、
+                                    select和call操作。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+                <div role="tabpanel" class="tab-pane" id="selectionexit">
+                    <!--panel开始-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><strong>selection.exit()</strong></div>
+                        <div class="panel-body">
+                            <div class="alert alert-success" role="alert">当数据集数目<选择元素数目时操作。</div>
+                            <div class="well">
+                                <span class="glyphicon glyphicon-asterisk">selection.exit()</span>
+                                <div class="alert alert-success" role="alert">
+                                    返回exit的selection。当前选择中的DOM元素在当前数据集中找不到对应的数据。
+                                    该方法只在update selection中使用，也就是在data操作之后使用。exit的selection可以定义
+                                    所有正常的操作。不过最常用的就是remove操作。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--panel结束-->
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Transitions">.2..</div>
+        <div role="tabpanel" class="tab-pane" id="Arrays">.3..</div>
+        <div role="tabpanel" class="tab-pane" id="Math">.4..</div>
+        <div role="tabpanel" class="tab-pane" id="External">.5..</div>
+        <div role="tabpanel" class="tab-pane" id="Formatting">.6..</div>
+        <div role="tabpanel" class="tab-pane" id="CSV">.7..</div>
+        <div role="tabpanel" class="tab-pane" id="Localization">.8..</div>
+        <div role="tabpanel" class="tab-pane" id="Colors">.9..</div>
+        <div role="tabpanel" class="tab-pane" id="Namespaces">.9..</div>
+        <div role="tabpanel" class="tab-pane" id="Internals">.9..</div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink%}
+<script src="{% static "plugins/google_code_prettify/run_prettify.js" %}" charset="utf-8"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+    });
+</script>
+{% endblock %}

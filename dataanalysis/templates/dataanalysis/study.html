@@ -1,0 +1,434 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block csslink %}
+<link href="{% static "plugins/google_code_prettify/prettify.css" %}" rel="stylesheet"/>
+<link href="{% static "plugins/jsonFormater/jsonFormater.css" %}" rel="stylesheet"/>
+{% endblock %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "dataanalysis/analysisleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">数据源</div>
+        <div class="panel-body">
+            <a href="{%static 'data/usagov_bitly_data2012-03-16-1331923249.txt'%}">usagov_bitly_data2012-03-16-1331923249.txt</a>
+        </div>
+    </div>
+    <!--获取第一个值-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">获取第一个值</div>
+        <div class="panel-body">
+            <br/>该数据集是一个json格式的文档，下面将该数据集转换为python对象list，并取第一个值为:<button id="getIndexOne" type="button" class="btn btn-primary">获取第一个值</button>
+           
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+                    import json
+                    path='static/data/usagov_bitly_data2012-03-16-1331923249.txt'
+                    records=[json.loads(line) for line in open(path)]
+                    records[0]
+                </pre>
+            </div>
+            <div class="alert alert-info" role="alert">
+                <strong><h3>Result:</h3></strong>
+                <div id='containerIndexOne'></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--获取所有的time-zone字段-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">获取记录中time-zone字段的前10条记录</div>
+        <div class="panel-body">
+            <br/>从上面json数据可以看出，包含一个key为‘tz’的字段，但有些数据该字段为空，需要做判断处理，还需要进行unicode和string的转换。获取前10条:<button id="gettimezone" type="button" class="btn btn-primary">获取</button>
+           
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+                    import json
+                    path='static/data/usagov_bitly_data2012-03-16-1331923249.txt'
+                    records=[json.loads(line) for line in open(path)]
+                    time_zones=[rec['tz'] for rec in records if 'tz' in rec]
+                    time_zones[:10]
+                </pre>
+            </div>
+            <div class="alert alert-info" role="alert">
+                <strong><h3>Result:</h3></strong>
+                <div id='containerTimeZone'></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--计算每个time_zone的数目-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">计算每个time_zone的数目</div>
+        <div class="panel-body">
+            <br/>从该数据集中计算每个time_zone的数目,并取出数目最多的前10个:<button id="getTimezoneNum" type="button" class="btn btn-primary">计算</button>
+           
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+                    import json
+                    path='static/data/usagov_bitly_data2012-03-16-1331923249.txt'
+                    records=[json.loads(line) for line in open(path)]
+                    time_zones=[rec['tz'] for rec in records if 'tz' in rec]
+                    counts=Counter(time_zones)
+                    ordercounts=counts.most_common(10)
+                </pre>
+            </div>
+            <div class="alert alert-info" role="alert">
+                <strong><h3>Result:</h3></strong>
+                <div id='containerTimeZoneNum'></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--使用pandas计算每个time_zone的数目-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">使用pandas计算每个time_zone的数目</div>
+        <div class="panel-body">
+            <br/>使用pandas从该数据集中计算每个time_zone的数目,并取出数目最多的前10个,由于数据集中该字段存在为NAN,为空的记录，因此需要对数据集进行处理。tz_counts的类型
+            为Series，不能直接进行JSON序列化，需要将其转化为json格式才能在页面显示。:<button id="getTimezoneNumByPandas" type="button" class="btn btn-primary">计算</button>
+           
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+                    import json
+                    path='static/data/usagov_bitly_data2012-03-16-1331923249.txt'
+                    records=[json.loads(line) for line in open(path)]
+                    frame = DataFrame(records)
+                    clean_tz=frame['tz'].fillna('Missing')
+                    clean_tz[clean_tz=='']='Unknown'
+                    tz_counts = clean_tz.value_counts().order(ascending=True)
+                    tz_counts[-10:].to_json()
+                </pre>
+            </div>
+            <div class="alert alert-info" role="alert">
+                <strong><h3>Result:</h3></strong>
+                <div id='containerTimeZoneNumByPandas'></div>
+            </div>
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#pandas" role="tab" data-toggle="tab">pandas</a></li>
+                <li role="presentation" ><a href="#ECharts" role="tab" data-toggle="tab">ECharts</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="pandas">
+                    <div class="alert alert-info" role="alert">
+                      <img id="time_zoneimg" src="{% static 'plot/study/time_zones.png'%}"></img>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="ECharts">
+                    <div id="timeZoneEchart" style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!--计算每个time_zone的使用Window和非Window的数目-->
+    <div class="panel panel-primary">
+        <div class="panel-heading">计算每个time_zone的使用Window和非Window的数目</div>
+        <div class="panel-body">
+            <br/>使用pandas从该数据集中计算每个time_zone的数目,并取出数目最多的前10个,由于数据集中该字段存在为NAN,为空的记录，因此需要对数据集进行处理。tz_counts的类型
+            为Series，不能直接进行JSON序列化，需要将其转化为json格式才能在页面显示。:<button id="getTzWindowsByPandas" type="button" class="btn btn-primary">计算</button>
+           
+            <div class="alert alert-success" role="alert">
+                <strong><h3>Code：</h3></strong>
+                <pre class="prettyprint Lang-py">
+    path='static/data/usagov_bitly_data2012-03-16-1331923249.txt'
+    records=[json.loads(line) for line in open(path)]
+    frame = DataFrame(records)
+    cframe = frame[frame.a.notnull()]
+    oper_system=np.where(cframe['a'].str.contains('Windows'),'Windows','Not Windows')
+    by_tz_os=cframe.groupby(['tz',oper_system])
+    agg_counts=by_tz_os.size().unstack().fillna(0)
+    indexer=agg_counts.sum(1).argsort()
+    count_subset=agg_counts.take(indexer)[-10:]
+    
+    plt.figure(figsize=(8,6), dpi=80)
+    count_subset.plot(kind='bar',rot=45,stacked=True)
+    plt.savefig('static/plot/study/tz_opersystem.png')
+    keys=[x.encode('ascii') for x in count_subset.keys().tolist()]
+    indexs=[x.encode('ascii') for x in count_subset.index.tolist()]
+    colum1=[x for x,y in count_subset.values]
+    colum2=[y for x,y in count_subset.values]
+    data={"keys":keys,"indexs":indexs,"colum1":colum1,"colum2":colum2}
+                </pre>
+            </div>
+            
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#op_pandas" role="tab" data-toggle="tab">pandas</a></li>
+                <li role="presentation" ><a href="#op_ECharts" role="tab" data-toggle="tab">ECharts</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="op_pandas">
+                    <div class="alert alert-info" role="alert">
+                      <img id="tzopersystemimg" src="{% static 'plot/study/tz_opersystem.png'%}"></img>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="op_ECharts">
+                    <div id="timeZoneOpEchart" style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink %}
+<script src="{% static "plugins/echarts/dist/echarts.js" %}"></script>
+<script src="{% static "plugins/google_code_prettify/prettify.js" %}" charset="utf-8"></script>
+<script src="{% static "plugins/jsonFormater/jsonFormater.js" %}"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+ var url=e.target.href;
+ var tab=url.substring(url.indexOf('#')+1,url.length);
+ if(tab==='ECharts')
+ {
+     echartInit();
+ }
+ if(tab==='op_ECharts')
+ {
+     opechartInit();
+ }
+})
+
+function opechartInit()
+{
+    var urlOpEchartData="{% url 'dataanalysis:urlOpEchartData'%}";
+    $.getJSON(urlOpEchartData,function(json){
+         
+          require.config({
+            paths: {
+            echarts: '{% static "plugins/echarts/dist" %}'
+          }
+         });
+         require(
+         [
+            'echarts',
+            'echarts/chart/bar'
+         ],
+         function (ec) {
+             var myChart = ec.init(document.getElementById('timeZoneOpEchart'));
+             var option = {
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data:json.keys
+    },
+    toolbox: {
+        show : false,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    yAxis : [
+        {
+            type : 'category',
+            data : json.indexs
+        }
+    ],
+    series : [
+        {
+            name:'Not Windows',
+            type:'bar',
+            stack: '总量',
+            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            data:json.colum1
+        },
+        {
+            name:'Windows',
+            type:'bar',
+            stack: '总量',
+            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+            data:json.colum2
+        }
+    ]
+};
+              myChart.setOption(option);
+           }
+         );
+    });
+}
+
+
+
+function echartInit()
+{
+    var urlEchartData="{% url 'dataanalysis:urlEchartData'%}";
+    $.getJSON(urlEchartData,function(json){
+        //Echart start
+require.config({
+    paths: {
+        echarts: '{% static "plugins/echarts/dist" %}'
+    }
+});
+require(
+    [
+        'echarts',
+        'echarts/chart/bar'
+    ],
+    function (ec) {
+        var myChart = ec.init(document.getElementById('timeZoneEchart'));
+        var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['时区统计']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : json.key,
+                            axisLabel:{
+                                rotate:25
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"数量",
+                            "type":"bar",
+                            "data":json.values
+                        }
+                    ]
+                };
+        myChart.setOption(option);
+    }
+   );
+        
+       });
+}
+//Echart end
+
+
+$(document).ready(function(){
+    prettyPrint();
+    
+    var optionsIndexOne = {
+        dom : '#containerIndexOne', //对应容器的css选择器
+        singleTab: "  ",  //单个tab
+        tabSize: 2,       //缩进数量
+        quoteKeys: true,  //key是否用双引号包含
+        imgCollapsed: "{% static 'plugins/jsonFormater/images/Collapsed.gif' %}", //收起的图片路径
+        imgExpanded: "{% static 'plugins/jsonFormater/images/Expanded.gif' %}",  //展开的图片路径
+        isCollapsible: true //是否支持展开收起
+    };
+    
+    
+    var urlIndexOne="{% url 'dataanalysis:getIndexOne'%}";
+    $("#getIndexOne").on("click",function(){
+        $.getJSON(urlIndexOne,function(json){
+          var jf = new JsonFormater(optionsIndexOne); //创建对象
+          jf.doFormat(json); //格式化json
+       });
+    });
+    
+    
+    
+    
+    var urltimezone="{% url 'dataanalysis:gettimezone'%}";
+    $("#gettimezone").on("click",function(){
+        $.ajax({
+          type: "GET",
+          url: urltimezone,
+          success: function(msg){
+            $("#containerTimeZone").text(msg);
+          }
+        });
+        
+    });
+    
+      /**
+       * 
+       */
+    
+     var optionsTimeZoneNum = {
+        dom : '#containerTimeZoneNum', //对应容器的css选择器
+        singleTab: "  ",  //单个tab
+        tabSize: 2,       //缩进数量
+        quoteKeys: true,  //key是否用双引号包含
+        imgCollapsed: "{% static 'plugins/jsonFormater/images/Collapsed.gif' %}", //收起的图片路径
+        imgExpanded: "{% static 'plugins/jsonFormater/images/Expanded.gif' %}",  //展开的图片路径
+        isCollapsible: true //是否支持展开收起
+    };
+    var urlTimezoneNum="{% url 'dataanalysis:getTimezoneNum'%}";
+    $("#getTimezoneNum").on("click",function(){
+        $.getJSON(urlTimezoneNum,function(json){
+          var jf = new JsonFormater(optionsTimeZoneNum); //创建对象
+          jf.doFormat(json); //格式化json
+       });
+    });
+    
+    var optionsTimeZoneNumByPandas = {
+        dom : '#containerTimeZoneNumByPandas', //对应容器的css选择器
+        singleTab: "  ",  //单个tab
+        tabSize: 2,       //缩进数量
+        quoteKeys: true,  //key是否用双引号包含
+        imgCollapsed: "{% static 'plugins/jsonFormater/images/Collapsed.gif' %}", //收起的图片路径
+        imgExpanded: "{% static 'plugins/jsonFormater/images/Expanded.gif' %}",  //展开的图片路径
+        isCollapsible: true //是否支持展开收起
+    };
+    var urlTimezoneNumByPandas="{% url 'dataanalysis:getTimezoneNumByPandas'%}";
+    $("#getTimezoneNumByPandas").on("click",function(){
+        $.getJSON(urlTimezoneNumByPandas,function(json){
+          var jf = new JsonFormater(optionsTimeZoneNumByPandas); //创建对象
+          jf.doFormat(json); //格式化json
+          var d = new Date();
+          $("#time_zoneimg").attr("src","{% static 'plot/study/time_zones.png' %}"+"?"+d.getTime());
+       });
+    });
+    
+    var urlTzWindowsByPandas="{% url 'dataanalysis:getTzWindowsByPandas'%}";
+    $("#getTzWindowsByPandas").on("click",function(){
+        $.getJSON(urlTzWindowsByPandas,function(json){
+          var d = new Date();
+          $("#tzopersystemimg").attr("src","{% static 'plot/study/tz_opersystem.png' %}"+"?"+d.getTime());
+       });
+    });
+    
+});
+</script>
+{% endblock %}

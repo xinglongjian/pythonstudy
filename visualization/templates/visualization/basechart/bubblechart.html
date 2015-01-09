@@ -1,0 +1,47 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/basechart/visualleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">【气泡图】【Bubble Chart】数据内容</div>
+        <div class="panel-body">
+           Panel content
+        </div>
+    </div>
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        气泡图是一个二维散点图，以数据点的大小代表第三个变量的值。
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
+        <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">..1.</div>
+        <div role="tabpanel" class="tab-pane" id="profile">.2..</div>
+        <div role="tabpanel" class="tab-pane" id="messages">.3..</div>
+        <div role="tabpanel" class="tab-pane" id="settings">.4..</div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink%}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}

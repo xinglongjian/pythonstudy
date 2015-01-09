@@ -1,0 +1,4 @@
+ <a href="{% url 'dataanalysis:index' %}" class="list-group-item {% ifequal submenu 'index' %}active{% endifequal %}">概览</a>
+ <a href="{% url 'dataanalysis:study' %}" class="list-group-item {% ifequal submenu 'study' %}active{% endifequal %}">时区数目统计</a>
+ <a href="{% url 'dataanalysis:movielens' %}" class="list-group-item {% ifequal submenu 'movielens' %}active{% endifequal %}">MovieLens统计</a>
+ <a href="{% url 'dataanalysis:babynames' %}" class="list-group-item {% ifequal submenu 'babynames' %}active{% endifequal %}">US Baby Names统计</a>

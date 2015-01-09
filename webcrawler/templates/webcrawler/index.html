@@ -1,0 +1,29 @@
+{% extends "home/base.html" %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "webcrawler/webcrawlerleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="jumbotron">
+        <h3>Web爬虫:</h3>
+        <p>
+            Web爬虫是利用程序向服务器发出请求并返回网站的内容,而不是通过浏览器来向服务器发出请求返回的结果。通过程序我们可以
+            进行web端的大部分功能操作，比如打开网页，身份验证，重定向，表单提交，验证码处理，Cookie处理等操作。
+        </p>
+        <p>
+        参考urllib2:<a href="https://docs.python.org/2/library/urllib2.html">https://docs.python.org/2/library/urllib2.html</a>
+        </p>
+    </div>
+</div> 
+{% endblock %}

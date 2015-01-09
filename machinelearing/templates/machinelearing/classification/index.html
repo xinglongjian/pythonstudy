@@ -1,0 +1,28 @@
+{% extends "home/base.html" %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "machinelearing/classification/classleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="jumbotron">
+        <h3>Classification:</h3>
+        <p>
+        如今，我们已经被机器能够学习和模仿人的智慧的能力所吸引，我们希望机器能够帮助我们做事，因为他们会比我们自己更了解自己。
+        他能帮助我们寻找网络上的信息，帮助我们购买鞋，因为他知道你穿多大码，喜欢什么款式的。他能控制家里的恒温器，并根据我们在
+        什么时间段需要什么样的温度进行调节。</p>
+        <p>机器学习分有监督学习和无监督学习，使用训练数据和测试数据对模型进行评估。机器学习是软件利用过去的经验来对未来做出决定。
+        他通过从数据中学习，并总结归纳出一定的规则，通过不断的学习，不断的纠正规则的不同参数值，来达到更好的预测效果。</p>
+    </div>
+</div> 
+{% endblock %}

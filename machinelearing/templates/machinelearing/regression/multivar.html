@@ -1,0 +1,23 @@
+{% extends "home/base.html" %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "machinelearing/regression/regreleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="jumbotron">
+        <h3>Regression:</h3>
+        <p></p>
+    </div>
+</div> 
+{% endblock %}

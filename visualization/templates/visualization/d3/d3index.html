@@ -1,0 +1,62 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+
+{% block csslink %}
+<link href="{% static "plugins/google_code_prettify/prettify.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/d3/d3left.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="jumbotron">
+        <h3>D3.js</h3>
+        <p>D3.js是基于数据操作文档的javascript库。D3通过使用HTML、SVG和CSS使数据更有生命力。D3的重点放在Web标准，它能够提供现代浏览器的全部功能，而不需要专有的框架，结合强大的可视化组件和数据驱动方法来操作DOM.
+        </p>
+        <p>D3使用的是SVG技术，而其他类似的库如jqplot、highchart则使用的是HTML5的canvas。
+        SVG技术是基于XML的矢量图形格式，SVG内容可以是静态的、动态的、交互的和动画的，很灵活。SVG元素可以使用CSS来进行样式调整和通过SVG DOM 提供的API来动态改变元素行为。
+        如果选择SVG技术，不仅仅可以得到矢量图形和动画，还可以通过脚本、高级动画、事件、过滤器等开发高度交互的web应用。
+        </p>
+        <p>D3的官方文档:<a herf="http://d3js.org/">http://d3js.org/</a></p>
+        <p>D3的参考文档:<a herf="https://www.dashingd3js.com/">https://www.dashingd3js.com/</a></p>
+        <p>D3的Github:<a herf="https://github.com/mbostock/d3">https://github.com/mbostock/d3</a></p>
+       
+    </div>
+    <div class="jumbotron">
+        <p>D3的API引用:<a herf="https://github.com/mbostock/d3/wiki/API-Reference">https://github.com/mbostock/d3/wiki/API-Reference</a></p>
+        <p>D3安装:</p>
+        <p>1)可以直接下载D3库并添加到工程里进行引用。</p>
+        <p><a href="https://github.com/mbostock/d3/releases">https://github.com/mbostock/d3/releases</a></p>
+        <p>2)可以直接使用CDN引用D3库，这样可以保证总是最新版本。</p>
+        <p>
+           <code class="prettyprint Lang-html">
+              &lt;script src="http://d3js.org/d3.v3.min.js" charset="utf-8">&lt;/script>
+           </code> 
+        </p>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink%}
+<script src="{% static "plugins/google_code_prettify/prettify.js" %}" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        prettyPrint();
+    });
+</script>
+{% endblock %}

@@ -14,20 +14,38 @@
             <li class="{% ifequal menu 'home' %}active{% endifequal %}">
                 <a href="{% url 'home' %}">Home</a>
             </li>
+            <!--
             <li class="{% ifequal menu 'pattern' %}active{% endifequal %}">
                 <a href="{% url 'designpattern:index' %}">设计模式</a>
             </li>
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">数据挖掘<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                  <li class="active"><a href="index.html">文本挖掘</a></li>
-                  <li><a target="_blank" href="One-Page/index.html">视频挖掘</a></li>                                
-                  <li><a href="page_home1.html">Option 3: Layer Slider</a></li>
-              </ul>
+            -->
+            <li class="{% ifequal menu 'webcrawler' %}active{% endifequal %}">
+                <a href="{% url 'webcrawler:index' %}">Web爬虫</a>
             </li>
-           <li class="{% ifequal menu 'visualization' %}active{% endifequal %}"><a href="{% url 'visualization:index' %}">数据可视化</a></li>
-            <li><a href="#">关于我</a></li>
-            <li><a href="{:U('Index/gotoAdmin')}">留言</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">机器学习<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li class="{% ifequal menu 'classification' %}active{% endifequal %}"><a href="{% url 'ml:classindex' %}">Classification</a></li>
+                  <li class="{% ifequal menu 'regression' %}active{% endifequal %}"><a href="{% url 'ml:regreindex' %}">Regression</a></li>
+                  <li class="{% ifequal menu 'clustering' %}active{% endifequal %}"><a href="{% url 'ml:clusterindex' %}">Clustering</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">数据分析<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li class="{% ifequal menu 'study' %}active{% endifequal %}"><a href="{% url 'dataanalysis:index' %}">练习</a></li>
+                  <!--<li><a target="_blank" href="One-Page/index.html">视频挖掘</a></li>-->                          
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">数据可视化<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="{% ifequal menu 'basechart' %}active{% endifequal %}"><a href="{% url 'visualization:index' %}">基本图形</a></li>
+                    <li class="{% ifequal menu 'd3' %}active{% endifequal %}"><a href="{% url 'visualization:d3index' %}">D3</a></li>
+                </ul>
+            </li>
+           
+            <li class="{% ifequal menu 'about' %}active{% endifequal %}"><a href="{% url 'about' %}">关于我</a></li>
           </ul>
     </div> <!-- /.navbar-collapse -->
 </div>

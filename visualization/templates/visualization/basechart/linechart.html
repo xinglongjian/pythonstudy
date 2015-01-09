@@ -1,0 +1,59 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "visualization/basechart/visualleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">【线性图】【Line Chart】数据内容</div>
+        <div class="panel-body">
+           Panel content
+        </div>
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">D3</a></li>
+        <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <div id="d3linechart"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">.2..</div>
+        <div role="tabpanel" class="tab-pane" id="messages">.3..</div>
+        <div role="tabpanel" class="tab-pane" id="settings">.4..</div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink%}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var svg=d3.select("#d3linechart").append('svg').attr('width',200).attr('heigth',200);
+        svg.append('circle')
+        .style('stroke','black')
+        .style('fill','yellow')
+        .attr('r',40)
+        .attr('cx',50)
+        .attr('cy',50);
+    });
+</script>
+{% endblock %}
