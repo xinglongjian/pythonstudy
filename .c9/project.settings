@@ -30,7 +30,7 @@
                     "default": true,
                     "env": {},
                     "name": "Django",
-                    "runner": "Django"
+                    "runner": "Django1"
                 }
             }
         }
