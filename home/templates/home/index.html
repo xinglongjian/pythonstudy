@@ -1,24 +1,61 @@
 {% extends "home/base.html" %}
+{% load staticfiles %}
 {% block leftContent %}
-<div class="col-md-9 col-sm-9">
-    
+<div class="col-md-12 col-sm-12">
+   {% block centernote %}
+   <div class="alert alert-info" role="alert">此例子是通过调用天气API接口，获取一下几个城市的天气数据，并存储到数据库中。
+   以此做为数据来源，分别对数据进行展示、分析。</div>
+   {% endblock %} 
+  <div class="panel panel-default">
+  <div class="panel-body">
+     <form class="form-horizontal" role="form">
+        {% for city in citys %} 
+        <label class="radio-inline">
+            <input type="radio" name="inlineRadioOptions" id="inlineRadio{{city.id}}" value="{{city.id}}" onchange="changeCity()"> {{city.cityName}}
+        </label>
+        {% endfor %}
+     </form>    
+  </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div id="todayEchart" style="height:400px"></div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div id="weekEchart" style="height:400px"></div>
+    </div>
+  </div>
+  <div class="row">
+      <div id="clusterEchart" style="height:400px"></div>
+  </div>
 </div> 
 
 {% endblock %}
 {% block rightContent %}
-<div class="col-md-3 col-sm-3 feature-text">
-    <div class="list-group">
-        <a href="#" class="list-group-item active">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-        <a href="#" class="list-group-item">Link</a>
-    </div>
-</div> 
-{% endblock %}
 
+{% endblock %}
+{% block jslink %}
+<script src="{% static "plugins/echarts/dist/echarts.js" %}"></script>
+<script src="{% static "js/indexchart.js" %}"></script>
+{% endblock %}
+{% block jsscript %}
+<script type="text/javascript">
+var weekurl="{% url 'webcrawler:weekTemp'%}";
+var currurl="{% url 'webcrawler:currTemp'%}";
+var clusterurl="{% url 'webcrawler:clusterTemp'%}";
+var dist="{% static 'plugins/echarts/dist' %}";
+function changeCity()
+{
+    v=$("input:checked").val()
+    currechartInit(v,currurl,dist);
+    weekeChartInit(v,weekurl,dist);
+}
+
+$(document).ready(function(){
+    currechartInit(1,currurl,dist);
+    weekeChartInit(1,weekurl,dist);
+    clusterChartInit(clusterurl,dist);
+});
+</script>
+{% endblock %}
