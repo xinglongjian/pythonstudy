@@ -16,7 +16,6 @@
     </div>
 </div> 
 
-
 {% endblock %}
 {% block rightContent %}
 <div class="col-md-9 col-sm-9">
@@ -133,7 +132,6 @@
 				<tbody>
 				</tbody>
 			</table>
-            
         </div>
     </div>
 </div> 
@@ -159,7 +157,6 @@
         HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,room,orien,area,price);
     });
     
-    //var getBusszoneJsonUrl="{% url 'webcrawler:getBussZoneJson'%}";
     function busszoneselect()
     {
         disId=$("#districtselect option:selected").val();
