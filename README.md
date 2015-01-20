@@ -8,13 +8,13 @@
    
 ##主要功能模块
    
-   *Web爬虫：主要用于从网络上抓取实时数据，并存储到MySql数据库中，用于后期处理。
-   *机器学习：主要使用scikit-learn库实现聚类、分类、回归等功能
-   *数据分析：主要使用pandas实现数据分析处理
-   *数据可视化：主要是涉及一些常用的可视化库，如EChart、D3、HighChart等。
+   * Web爬虫：主要用于从网络上抓取实时数据，并存储到MySql数据库中，用于后期处理。
+   * 机器学习：主要使用scikit-learn库实现聚类、分类、回归等功能
+   * 数据分析：主要使用pandas实现数据分析处理
+   * 数据可视化：主要是涉及一些常用的可视化库，如EChart、D3、HighChart等。
 
 ##访问地址
   
-   [http://pythonstudy-xinglongjian1.c9.io/]: http://pythonstudy-xinglongjian1.c9.io/
+   [访问地址]: http://pythonstudy-xinglongjian1.c9.io/
    
 
