@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 import os
 import sys
 
@@ -12,9 +13,16 @@ if __name__ == "__main__":
     import django
     django.setup()
     
-    from webcrawler.utils.WeatherThread import MyThread
-    t1=MyThread(23)
-    t1.setDaemon(True) 
-    t1.start()
+    from webcrawler.utils.CrawlerThread import WeatherThread,HouseThread
+    
+    #天气抓取线程
+    wt=WeatherThread(23)
+    wt.setDaemon(True) 
+    wt.start()
+    
+    #房屋抓取线程
+    ht=HouseThread(24)
+    ht.setDaemon(True) 
+    ht.start()
     
     execute_from_command_line(sys.argv)

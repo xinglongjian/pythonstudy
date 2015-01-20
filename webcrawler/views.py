@@ -11,7 +11,7 @@ import pytz
 ##from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse,HttpResponse
 from django.template import RequestContext
-from webcrawler.models import Province,City,Weather
+from webcrawler.models import Province,City,Weather,District,BussZone,Community,House,HousePrice
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -115,3 +115,111 @@ def clusterTemp(request):
     # result = urllib2.urlopen(req).read()
     # return render(request,'webcrawler/gmail/gmailmain.html',{"menu":"webcrawler","submenu":"gmail","content":result})
 #---------------------------------------------------------------------------------
+
+def weather(request):
+    citys=City.objects.all()
+    return  render(request,'webcrawler/weather/index.html',{"menu":"webcrawler","submenu":"weather","citys":citys})
+
+def getWeatherJosn(request):
+    idraw=request.GET.get("sEcho")
+    displayStart=int(request.GET.get("iDisplayStart"))
+    displayLength=int(request.GET.get("iDisplayLength"))
+    iSortCol_0=request.GET.get("iSortCol_0")
+    sSortDir_0=request.GET.get("sSortDir_0")
+    cityid=request.GET.get("cityid")
+    datestr=request.GET.get("date")
+    
+    count=Weather.objects.count()
+    
+    weathObjs=Weather.objects.order_by('-date','-time').all()
+    if cityid !='null':
+        weathObjs=weathObjs.filter(city_id=cityid)
+    if datestr !='null' and datestr !='':
+        weathObjs=weathObjs.filter(date=datestr)
+    filtercount=weathObjs.count()
+    displayEnd=displayStart+displayLength
+    alldatas=weathObjs[displayStart:displayEnd]
+    datalist=[]
+    for d in alldatas:
+        itemlist=[]
+        itemlist.append(d.city.cityName)
+        itemlist.append(d.date)
+        itemlist.append(d.time)
+        itemlist.append(d.weather)
+        itemlist.append(d.temp)
+        itemlist.append(d.l_tmp)
+        itemlist.append(d.h_tmp)
+        itemlist.append(d.WD)
+        itemlist.append(d.WS)
+        datalist.append(itemlist)
+    data={"draw":idraw,"recordsTotal":count,"recordsFiltered":filtercount,"data":datalist}
+    return JsonResponse(data,safe=False)
+
+
+def house(request):
+    districts=District.objects.all()
+    return render(request,'webcrawler/house/index.html',{"menu":"webcrawler","submenu":"house","districts":districts})
+    
+def getHouseJosn(request):
+    idraw=request.GET.get("sEcho")
+    displayStart=int(request.GET.get("iDisplayStart"))
+    displayLength=int(request.GET.get("iDisplayLength"))
+    iSortCol_0=request.GET.get("iSortCol_0")
+    sSortDir_0=request.GET.get("sSortDir_0")
+    bzid=request.GET.get("bzid")
+    room=request.GET.get("room")
+    orien=request.GET.get("orien")
+    area=request.GET.get("area")
+    price=request.GET.get("price")
+    
+    count=House.objects.count()
+    
+    houseObjs=House.objects.all()
+    if bzid!=None and bzid !='null':
+        commids=Community.objects.filter(busszone_id=bzid).values_list('id')
+        houseObjs=houseObjs.filter(community_id__in=commids)
+    if room!=None and room !='null':
+        houseObjs=houseObjs.filter(bedroom=int(room))
+    if orien !=None and orien !='null':
+        houseObjs=houseObjs.filter(orien=orien)
+    if area !=None and area !='null':
+        areas=area.split(",")
+        houseObjs=houseObjs.filter(area__range=(int(areas[0]),int(areas[1])))
+    if price !=None and price!='null':
+        prices=price.split(",")
+        priceHids=HousePrice.objects.filter(price__range=(int(prices[0]),int(prices[1]))).values_list('house_id').distinct()
+        houseObjs=houseObjs.filter(id__in=priceHids)
+    filtercount=houseObjs.count()
+    displayEnd=displayStart+displayLength
+    alldatas=houseObjs[displayStart:displayEnd]
+    datalist=[]
+    for d in alldatas:
+        itemlist=[]
+        itemlist.append(d.community.name)
+        itemlist.append(d.code)
+        itemlist.append(d.bedroom)
+        itemlist.append(d.liveroom)
+        itemlist.append(d.orien)
+        itemlist.append(d.floors)
+        itemlist.append(d.allfloors)
+        itemlist.append(d.area)
+        priceobjs=HousePrice.objects.filter(house_id=d.id)
+        priceobj=priceobjs.order_by("-datetime")[0]
+        itemlist.append(priceobjs.count())
+        itemlist.append(priceobj.price)
+        datalist.append(itemlist)
+    data={"draw":idraw,"recordsTotal":count,"recordsFiltered":filtercount,"data":datalist}
+    return JsonResponse(data,safe=False)
+
+
+def getBussZoneJson(request):
+    disId=request.GET.get("disId")
+    busszoneobjs=BussZone.objects.filter(district_id=disId)
+    datalist=[]
+    for d in busszoneobjs:
+        itemlist=[]
+        itemlist.append(d.id)
+        itemlist.append(d.name)
+        datalist.append(itemlist)
+    data={"data":datalist}
+    return JsonResponse(data,safe=False)

@@ -1,0 +1,188 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block csslink %}
+<link href="{% static "plugins/jquery_DataTable/css/jquery.dataTables.min.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "webcrawler/webcrawlerleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">房屋检索</div>
+        <div class="panel-body">
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">城区:</div>
+                     <select class="form-control" id="districtselect" onclick="busszoneselect()">
+                         <option value="null">不限</option>
+                         {% if districts %}
+                         {% for c in districts %}
+                         <option value="{{c.id}}">{{c.name}}</option>
+                         {% endfor %}
+                         {% endif%}
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">商圈:</div>
+                     <select class="form-control" id="bzselect">
+                         <option value="null">不限</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">卧室:</div>
+                     <select class="form-control" id="roomselect">
+                         <option value="null">不限</option>
+                         <option value="1">1居室</option>
+                         <option value="2">2居室</option>
+                         <option value="3">3居室</option>
+                         <option value="4">4居室</option>
+                         <option value="5">5居室</option>
+                         <option value="6">6居室</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">朝向:</div>
+                     <select class="form-control" id="orienselect">
+                         <option value="null">不限</option>
+                         <option value="东">东</option>
+                         <option value="南">南</option>
+                         <option value="西">西</option>
+                         <option value="北">北</option>
+                         <option value="南北">南北</option>
+                         <option value="东南">东南</option>
+                         <option value="西南">西南</option>
+                         <option value="东北">东北</option>
+                         <option value="西北">西北</option>
+                         <option value="东西">东西</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">面积:</div>
+                     <select class="form-control" id="areaselect">
+                         <option value="null">不限</option>
+                         <option value="0,50">50平以下</option>
+                         <option value="50,70">50-70平</option>
+                         <option value="70,90">70-90平</option>
+                         <option value="90,110">90-110平</option>
+                         <option value="110,130">110-130平</option>
+                         <option value="130,150">130-150平</option>
+                         <option value="150,200">150-200平</option>
+                         <option value="200,300">200-300平</option>
+                         <option value="300,500">300-500平</option>
+                         <option value="500,1000">500-1000平</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">价格:</div>
+                     <select class="form-control" id="priceselect">
+                         <option value="null">不限</option>
+                         <option value="0,150">150万以下</option>
+                         <option value="150,200">150-200万</option>
+                         <option value="200,250">200-250万</option>
+                         <option value="250,300">250-300万</option>
+                         <option value="300,400">300-400万</option>
+                         <option value="400,500">400-500万</option>
+                         <option value="500,700">500-700万</option>
+                         <option value="700,1000">700-1000万</option>
+                         <option value="1000,2000">1000-2000万</option>
+                      </select>
+                 </div>
+              </div>
+             <button type="button" id="searchBtn" class="btn btn-primary">筛选</button>
+            </form>
+            
+            <table class="table" id="house_table">
+				<thead>
+					<tr>
+						<th>小区</th>
+                        <th>编码</th>
+                        <th>卧室</th>
+                        <th>客厅</th>
+                        <th>朝向</th>
+                        <th>楼层</th>
+                        <th>楼层总数</th>
+                        <th>面积</th>
+                        <th>修改次数</th>
+                        <th>当前价格</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+            
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink %}
+<script src="{% static "plugins/jquery_DataTable/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "js/housetable.js" %}"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null);
+    });
+    
+    $("#searchBtn").on('click',function(){
+        var bzid=$("#bzselect option:selected").val();
+        var room=$("#roomselect option:selected").val();
+        var orien=$("#orienselect option:selected").val();
+        var area=$("#areaselect option:selected").val();
+        var price=$("#priceselect option:selected").val();
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,room,orien,area,price);
+    });
+    
+    //var getBusszoneJsonUrl="{% url 'webcrawler:getBussZoneJson'%}";
+    function busszoneselect()
+    {
+        disId=$("#districtselect option:selected").val();
+        $.ajax({
+            url:"{% url 'webcrawler:getBussZoneJson'%}",
+            type:"get",
+            data:{"disId":disId},
+            dataType:'json',
+            success:function(data){
+                if(data.data)
+                {
+                    var items=data.data;
+                    var options="<option value=\"null\">不限</option>";
+                    for(var i=0;i<items.length;i++)
+                    {
+                        var item=items[i];
+                        options=options.concat("<option value='"+item[0]+"'>"+item[1]+"</option>")
+                    }
+                    $("#bzselect").html(options);
+                }
+            }
+        });
+    }
+    
+</script>
+{% endblock %}

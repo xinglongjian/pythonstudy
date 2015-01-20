@@ -1,0 +1,98 @@
+{% extends "home/base.html" %}
+{% load staticfiles %}
+{% block csslink %}
+<link href="{% static "plugins/jquery_DataTable/css/jquery.dataTables.min.css" %}" rel="stylesheet"/>
+<link href="{% static "plugins/bootstrap_datetime/css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block leftContent %}
+<div class="col-md-3 col-sm-3 feature-text">
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单栏</div>
+        <div class="list-group">
+            {% block designleft %}
+                {% include "webcrawler/webcrawlerleft.html" %}
+            {% endblock %}
+        </div>
+    </div>
+</div> 
+
+{% endblock %}
+{% block rightContent %}
+<div class="col-md-9 col-sm-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">天气检索</div>
+        <div class="panel-body">
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">城市:</div>
+                     <select class="form-control" id="cityselect">
+                         <option value="null">请选择城市</option>
+                         {% if citys %}
+                         {% for c in citys %}
+                         <option value="{{c.id}}">{{c.cityName}}</option>
+                         {% endfor %}
+                         {% endif%}
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">日期:</div>
+                     <input id="form_datetime" size="16" data-link-format="yyyy-mm-dd" type="text" value="" readonly>
+                 </div>
+             </div>
+             <button type="button" id="searchBtn" class="btn btn-primary">筛选</button>
+            </form>
+            
+            <table class="table" id="weather_table">
+				<thead>
+					<tr>
+						<th>城市</th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>天气</th>
+                        <th>当前温度</th>
+                        <th>最低温度</th>
+                        <th>最高温度</th>
+                        <th>风向</th>
+                        <th>风速</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+            
+        </div>
+    </div>
+</div> 
+{% endblock %}
+
+{% block jslink %}
+<script src="{% static "plugins/jquery_DataTable/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/bootstrap_datetime/js/bootstrap-datetimepicker.min.js" %}"></script>
+<script src="{% static "plugins/bootstrap_datetime/js/locales/bootstrap-datetimepicker.zh-CN.js" %}"></script>
+<script src="{% static "js/weathertable.js" %}"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        TableEditable.init("{% url 'webcrawler:getWeatherJosn' %}",null,null);
+    });
+    
+    $("#searchBtn").on('click',function(){
+        var datestr=$("#form_datetime").val();
+        var cityid=$("#cityselect option:selected").val()
+        TableEditable.init("{% url 'webcrawler:getWeatherJosn' %}",cityid,datestr);
+    });
+    
+    $('#form_datetime').datetimepicker({
+        language:  'zh-CN',
+        format: "yyyy-mm-dd",
+        startView: 2,
+		minView: 2
+    });
+</script>
+{% endblock %}

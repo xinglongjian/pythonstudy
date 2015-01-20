@@ -1,1 +1,3 @@
  <a href="{% url 'webcrawler:index' %}" class="list-group-item {% ifequal submenu 'index' %}active{% endifequal %}">概览</a>
+ <a href="{% url 'webcrawler:weather' %}" class="list-group-item {% ifequal submenu 'weather' %}active{% endifequal %}">天气数据</a>
+ <a href="{% url 'webcrawler:house' %}" class="list-group-item {% ifequal submenu 'house' %}active{% endifequal %}">房屋数据</a>

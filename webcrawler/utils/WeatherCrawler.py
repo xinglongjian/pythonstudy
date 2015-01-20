@@ -5,6 +5,7 @@ import httplib2
 import json
 from decimal import *
 
+#更新城市信息并调用天气api
 def weatherAPIInvoke():
     h=httplib2.Http()
     city_list=City.objects.all()
@@ -39,7 +40,7 @@ def saveWeather(h,city):
         time=weatherjson['retData']['time']
         try:
             w=Weather.objects.get(city=city,date=date,time=time)
-            return;
+            return
         except Weather.DoesNotExist:
             temp=int(weatherjson['retData']['temp'])
             ltmp=weatherjson['retData']['l_tmp']
@@ -49,4 +50,7 @@ def saveWeather(h,city):
             w=Weather(city=city,date=date,time=time,weather=weatherjson['retData']['weather'],temp=temp,l_tmp=l_tmp,h_tmp=h_tmp,
             WD=weatherjson['retData']['WD'],WS=weatherjson['retData']['WS'])
             w.save()
+        except Weather.MultipleObjectsReturned:
+            print city.name+"---"+date+"---"+time
+            return
     weatherapi="";

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # coding=utf-8
 from django.db import models
 
@@ -40,5 +41,84 @@ class Weather(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.date, self.time)
         
-    def __str__(self):
-        return u'%s %s %s' % (self.city.cityName,self.date,self.time)
+class Crawlerdb(models.Model):
+    category=models.CharField(u'抓取类别',max_length=50)
+    starttime=models.DateTimeField(u'开始时间')
+    endtime=models.DateTimeField(u'结束时间')
+    newdatanum=models.IntegerField(u'新数据数量')
+    olddatanum=models.IntegerField(u'重复数据数量')
+    
+    class Meta:
+        verbose_name='抓取记录'
+        verbose_name_plural='抓取记录'
+    
+    def __unicode__(self):
+        return u'%s %s' % (self.category, self.starttime)
+    
+class District(models.Model):
+    name=models.CharField(u'名称',max_length=30)
+    code=models.CharField(u'代码',max_length=20)
+    
+    class Meta:
+        verbose_name='区域'
+        verbose_name_plural='区域'
+        
+    def __unicode__(self):
+        return '%s %s' % (self.name, self.code)
+        
+        
+class BussZone(models.Model):
+    district=models.ForeignKey(District)
+    name=models.CharField(u'名称',max_length=30)
+    code=models.CharField(u'代码',max_length=20)
+   
+    class Meta:
+        verbose_name='商圈'
+        verbose_name_plural='商圈'
+        
+    def __unicode__(self):
+        return '%s %s %s' % (self.district.name,self.name,self.code)
+    
+class Community(models.Model):
+    busszone=models.ForeignKey(BussZone)
+    name=models.CharField(u'名称',max_length=30)
+    code=models.CharField(u'代码',max_length=20)
+    buildyear=models.IntegerField(U'建成年底')
+    
+    class Meta:
+        verbose_name='小区'
+        verbose_name_plural='小区'
+        
+    def __unicode__(self):
+        return '%s %s %s' % (self.busszone.name,self.name, self.code)
+        
+class House(models.Model):
+    community=models.ForeignKey(Community)
+    title=models.CharField(u'标题',max_length=100)
+    code=models.CharField(u'编号',max_length=30)
+    bedroom=models.IntegerField(u'卧室')
+    liveroom=models.IntegerField(u'客厅')
+    orien=models.CharField(u'朝向',max_length=20)
+    floors=models.CharField(u'楼层',max_length=20)
+    allfloors=models.IntegerField(u'楼层总数')
+    area=models.IntegerField(u'面积')
+    
+    class Meta:
+        verbose_name='房屋'
+        verbose_name_plural='房屋'
+        
+    def __unicode__(self):
+        return self.title
+    
+    
+class HousePrice(models.Model):
+    house=models.ForeignKey(House)
+    price=models.IntegerField(u'价格')
+    datetime=models.DateTimeField(u'添加时间')
+    
+    class Meta:
+        verbose_name='价格'
+        verbose_name_plural='价格'
+        
+    def __unicode__(self):
+        return self.price
