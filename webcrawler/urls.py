@@ -12,5 +12,5 @@ urlpatterns=patterns('',
      url(r'^getWeatherJosn/',views.getWeatherJosn,name='getWeatherJosn'),
      url(r'^getHouseJosn/',views.getHouseJosn,name='getHouseJosn'),
      url(r'^getBussZoneJson/',views.getBussZoneJson,name='getBussZoneJson'),
-     
+     url(r'^getCommunityJson/',views.getCommunityJson,name='getCommunityJson'),
     )

@@ -167,7 +167,9 @@ def getHouseJosn(request):
     iSortCol_0=request.GET.get("iSortCol_0")
     sSortDir_0=request.GET.get("sSortDir_0")
     bzid=request.GET.get("bzid")
+    commid=request.GET.get("commid")
     room=request.GET.get("room")
+    liveroom=request.GET.get("liveroom")
     orien=request.GET.get("orien")
     area=request.GET.get("area")
     price=request.GET.get("price")
@@ -178,8 +180,12 @@ def getHouseJosn(request):
     if bzid!=None and bzid !='null':
         commids=Community.objects.filter(busszone_id=bzid).values_list('id')
         houseObjs=houseObjs.filter(community_id__in=commids)
+    if commid !=None and commid !='null':
+        houseObjs=houseObjs.filter(community_id=commid)
     if room!=None and room !='null':
         houseObjs=houseObjs.filter(bedroom=int(room))
+    if liveroom!=None and liveroom!='null':
+        houseObjs=houseObjs.filter(liveroom=liveroom)
     if orien !=None and orien !='null':
         houseObjs=houseObjs.filter(orien=orien)
     if area !=None and area !='null':
@@ -217,6 +223,18 @@ def getBussZoneJson(request):
     busszoneobjs=BussZone.objects.filter(district_id=disId)
     datalist=[]
     for d in busszoneobjs:
+        itemlist=[]
+        itemlist.append(d.id)
+        itemlist.append(d.name)
+        datalist.append(itemlist)
+    data={"data":datalist}
+    return JsonResponse(data,safe=False)
+    
+def getCommunityJson(request):
+    bzId=request.GET.get("bzId")
+    communityobjs=Community.objects.filter(busszone_id=bzId)
+    datalist=[]
+    for d in communityobjs:
         itemlist=[]
         itemlist.append(d.id)
         itemlist.append(d.name)

@@ -39,7 +39,15 @@
               <div class="form-group">
                  <div class="input-group">
                      <div class="input-group-addon">商圈:</div>
-                     <select class="form-control" id="bzselect">
+                     <select class="form-control" id="bzselect" onclick="communityselect()">
+                         <option value="null">不限</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">小区:</div>
+                     <select class="form-control" id="commselect">
                          <option value="null">不限</option>
                       </select>
                  </div>
@@ -55,6 +63,18 @@
                          <option value="4">4居室</option>
                          <option value="5">5居室</option>
                          <option value="6">6居室</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">客厅:</div>
+                     <select class="form-control" id="liveroomselect">
+                         <option value="null">不限</option>
+                         <option value="0">0</option>
+                         <option value="1">1</option>
+                         <option value="2">2</option>
+                         <option value="3">3</option>
                       </select>
                  </div>
               </div>
@@ -145,18 +165,23 @@
 {% block jsscript %}
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null);
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null,null,null);
     });
     
     $("#searchBtn").on('click',function(){
         var bzid=$("#bzselect option:selected").val();
+        var commid=$("#commselect option:selected").val();
         var room=$("#roomselect option:selected").val();
+        var liveroom=$("#liveroomselect option:selected").val();
         var orien=$("#orienselect option:selected").val();
         var area=$("#areaselect option:selected").val();
         var price=$("#priceselect option:selected").val();
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,room,orien,area,price);
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,commid,room,liveroom,orien,area,price);
     });
     
+    /**
+     * 商圈下拉列表
+     */
     function busszoneselect()
     {
         disId=$("#districtselect option:selected").val();
@@ -176,6 +201,32 @@
                         options=options.concat("<option value='"+item[0]+"'>"+item[1]+"</option>")
                     }
                     $("#bzselect").html(options);
+                }
+            }
+        });
+    }
+    /**
+     * 小区下拉列表
+     */
+    function communityselect()
+    {
+        bzId=$("#bzselect option:selected").val();
+        $.ajax({
+            url:"{% url 'webcrawler:getCommunityJson'%}",
+            type:"get",
+            data:{"bzId":bzId},
+            dataType:'json',
+            success:function(data){
+                if(data.data)
+                {
+                    var items=data.data;
+                    var options="<option value=\"null\">不限</option>";
+                    for(var i=0;i<items.length;i++)
+                    {
+                        var item=items[i];
+                        options=options.concat("<option value='"+item[0]+"'>"+item[1]+"</option>")
+                    }
+                    $("#commselect").html(options);
                 }
             }
         });

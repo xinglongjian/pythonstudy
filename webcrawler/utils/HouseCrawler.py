@@ -155,7 +155,7 @@ def CrawlerHouse():
             count=1
             commurl="http://bj.5i5j.com/exchange/n%s/" % i
             try:
-                #print commurl
+                print commurl
                 str = urllib2.urlopen(commurl,timeout=300).read().decode("utf-8")
                 parseHouse(str)
                 commurl=""
@@ -264,7 +264,7 @@ def parseHouse(content):
         try:
             h=House.objects.get(code=house_code)
         except House.DoesNotExist:
-            #print 'save house,%s,%s,%s,%s' % (commobj.name,house_code,orien,area)
+            print 'save house,%s,%s,%s,%s' % (commobj.name,house_code,orien,area)
             h=House(community=commobj,title=house_title.encode('utf-8'),code=house_code.encode('utf-8'),bedroom=bedroom,
             liveroom=liveroom,orien=orien.encode('utf-8'),floors=floor.encode('utf-8'),allfloors=allfloor,area=area)
             try:
@@ -272,14 +272,14 @@ def parseHouse(content):
             except Exception, e:
                 print e
              
-            #print 'save house price first'
+            print 'save house price first'
             hPrice=HousePrice(house=h,price=price,datetime=publisdate)
             hPrice.save()
         try:
-            #print 'save houde price,%s,%s,%s'% (h.code,price,publisdate)
+            print 'save houde price,%s,%s,%s'% (h.code,price,publisdate)
             hPrice=HousePrice.objects.get(house=h,price=price,datetime=publisdate)
         except HousePrice.DoesNotExist:
-            #print 'save house second'
+            print 'save house second'
             hPrice=HousePrice(house=h,price=price,datetime=publisdate)
             hPrice.save()
         #print 'save over'
