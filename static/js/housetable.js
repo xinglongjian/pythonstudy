@@ -1,7 +1,7 @@
 var oTable;
 var HouseEditable = function () {
 
-    var handleTable = function (url,bzid,commid,room,liveroom,orien,area,price) {
+    var handleTable = function (url,bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype) {
         if(oTable)
          {
            oTable.fnClearTable(false);
@@ -21,7 +21,8 @@ var HouseEditable = function () {
             "bFilter":false,
             "bSort":false,
             "sServerMethod": "get",
-            "sAjaxSource":url+"?bzid="+bzid+"&commid="+commid+"&room="+room+"&liveroom="+liveroom+"&orien="+orien+"&area="+area+"&price="+price,
+            "sAjaxSource":url+"?bzid="+bzid+"&commid="+commid+"&room="+room+"&liveroom="+liveroom+"&orien="+orien+"&area="+area+"&price="+price+
+                         "&sortcolumn="+sortcolumn+"&sorttype="+sorttype,
             
             "sEmptyTable":"表中数据为空",
             "pagingType": "full_numbers",
@@ -47,8 +48,8 @@ var HouseEditable = function () {
     return {
 
         //main function to initiate the module
-        init: function (url,bzid,commid,room,liveroom,orien,area,price) {
-            handleTable(url,bzid,commid,room,liveroom,orien,area,price);
+        init: function (url,bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype) {
+            handleTable(url,bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype);
         }
 
     };

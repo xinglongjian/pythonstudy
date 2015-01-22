@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# coding=utf-8
 from django.shortcuts import render
 from webcrawler.models import Community,House,HousePrice
 
@@ -16,6 +18,19 @@ def regreindex(request):
 def singlevar(request):
     commids=Community.objects.filter(busszone_id=943).values_list("id")
     houseobjs=House.objects.filter(community_id__in=commids,bedroom=3,liveroom=1,orien=u'南北')
+    houseobjs=houseobjs.values_list('id','area')
+    datalist=[]
+    for d in houseobjs:
+        itemlist=[]
+        itemlist.append(d[1])
+        priceobjs=HousePrice.objects.filter(house_id=d[0])
+        priceobj=priceobjs.order_by("-datetime")[0]
+        itemlist.append(priceobj.price)
+        datalist.append(itemlist)
+    
+    df=pd.DataFrame(datalist)
+    
+    print df
     
     return render(request,'machinelearing/regression/singlevar.html',{"menu":"regression","submenu":"singlevar"})
 

@@ -22,7 +22,9 @@
     <div class="panel panel-primary">
         <div class="panel-heading">房屋检索</div>
         <div class="panel-body">
-            <form class="form-inline" role="form">
+            <div class="panel panel-primary">
+              <div class="panel-body">
+                  <form class="form-inline" role="form">
               <div class="form-group">
                  <div class="input-group">
                      <div class="input-group-addon">城区:</div>
@@ -131,10 +133,35 @@
                       </select>
                  </div>
               </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">排序字段:</div>
+                     <select class="form-control" id="sortcolumnselect">
+                         <option value="null">不限</option>
+                         <option value="area">面积</option>
+                         <option value="updatenum">修改次数</option>
+                         <option value="price">价格</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">排序类型:</div>
+                     <select class="form-control" id="sorttypeselect">
+                         <option value="null">不限</option>
+                         <option value="asc">升序</option>
+                         <option value="desc">降序</option>
+                      </select>
+                 </div>
+              </div>
              <button type="button" id="searchBtn" class="btn btn-primary">筛选</button>
             </form>
+              </div>
+            </div>
             
-            <table class="table" id="house_table">
+            <div class="panel panel-primary">
+             <div class="panel-body">
+                <table class="table" id="house_table">
 				<thead>
 					<tr>
 						<th>小区</th>
@@ -152,6 +179,8 @@
 				<tbody>
 				</tbody>
 			</table>
+             </div>
+            </div>
         </div>
     </div>
 </div> 
@@ -165,7 +194,7 @@
 {% block jsscript %}
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null,null,null);
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null,null,null,null,null);
     });
     
     $("#searchBtn").on('click',function(){
@@ -176,7 +205,9 @@
         var orien=$("#orienselect option:selected").val();
         var area=$("#areaselect option:selected").val();
         var price=$("#priceselect option:selected").val();
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,commid,room,liveroom,orien,area,price);
+        var sortcolumn=$("#sortcolumnselect option:selected").val();
+        var sorttype=$("#sorttypeselect option:selected").val();
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype);
     });
     
     /**

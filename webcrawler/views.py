@@ -173,6 +173,8 @@ def getHouseJosn(request):
     orien=request.GET.get("orien")
     area=request.GET.get("area")
     price=request.GET.get("price")
+    sortcolumn=request.GET.get("sortcolumn")
+    sorttype=request.GET.get("sorttype")
     
     count=House.objects.count()
     
@@ -195,25 +197,32 @@ def getHouseJosn(request):
         prices=price.split(",")
         priceHids=HousePrice.objects.filter(price__range=(int(prices[0]),int(prices[1]))).values_list('house_id').distinct()
         houseObjs=houseObjs.filter(id__in=priceHids)
+    if sortcolumn=='area':
+        if sorttype=='asc':
+            print 'area asc'
+            houseObjs=houseObjs.order_by('area')
+        else:
+            print 'area desc'
+            houseObjs=houseObjs.order_by('-area')
     filtercount=houseObjs.count()
     displayEnd=displayStart+displayLength
     alldatas=houseObjs[displayStart:displayEnd]
     datalist=[]
     for d in alldatas:
-        itemlist=[]
-        itemlist.append(d.community.name)
-        itemlist.append(d.code)
-        itemlist.append(d.bedroom)
-        itemlist.append(d.liveroom)
-        itemlist.append(d.orien)
-        itemlist.append(d.floors)
-        itemlist.append(d.allfloors)
-        itemlist.append(d.area)
         priceobjs=HousePrice.objects.filter(house_id=d.id)
         priceobj=priceobjs.order_by("-datetime")[0]
-        itemlist.append(priceobjs.count())
-        itemlist.append(priceobj.price)
+        itemlist=(d.community.name,d.code,d.bedroom,d.liveroom,d.orien,d.floors,d.allfloors,d.area,priceobjs.count(),priceobj.price)
         datalist.append(itemlist)
+    if sortcolumn =='updatenum':
+        if sorttype=='asc':
+            datalist.sort(key=lambda x:x[8])
+        if sorttype=='desc':
+            datalist.sort(key=lambda x:x[8],reverse=True)
+    if sortcolumn=='price':
+        if sorttype=='asc':
+            datalist.sort(key=lambda x:x[9])
+        if sorttype=='desc':
+            datalist.sort(key=lambda x:x[9],reverse=True)
     data={"draw":idraw,"recordsTotal":count,"recordsFiltered":filtercount,"data":datalist}
     return JsonResponse(data,safe=False)
 

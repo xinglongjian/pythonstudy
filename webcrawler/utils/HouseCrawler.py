@@ -169,10 +169,11 @@ def CrawlerHouse():
                         str = urllib2.urlopen(commurl,timeout=300).read().decode("utf-8")
                         parseHouse(str)
                         commurl=""
-                        return
+                        if True:break
                     except urllib2.HTTPError, e:
                            count=count+1
-                failedurls.append(commurl)
+                else:
+                    failedurls.append(commurl)
                 #print e.code
                 continue
             except Exception,e:
@@ -207,14 +208,60 @@ def parseHouse(content):
         if house_url!=None :
             house_code=house_url.split("/")[2]
         
-        comm_a=d.find_class("subtitle")[0].find("*a")
-        comm_code=comm_a.get("href").split("/")[2]
-        try:
-            commobj=Community.objects.get(code=comm_code)
-        except Community.DoesNotExist:
-            print "community is not exist,code = %s" % comm_code
-            continue
+        patt=re.compile(r"(\d+)")
+        h3=d.find_class("house-info-col")[0].find("h3")
+        spans=h3.findall("span")
+        if len(spans)==3:
+            span_one=spans[0]
+            orien=span_one.text_content().strip()
+            
+            span_two=spans[1].text_content()
+            floor=span_two.split("/")[0]
+            allfloors=patt.findall(span_two.split("/")[1])
+            if len(allfloors)>0:
+                allfloor=int(allfloors[0])
+            else:
+                allfloor=0
+            
+            span_three=spans[2].text_content()
+            build_years=patt.findall(span_three)
+            if len(build_years)>0:
+                build_year=int(build_years[0])
+            else:
+                build_year=0
         
+        comm_as=d.find_class("subtitle")[0].findall("*a")
+        if len(comm_as)==3:
+            comm_a=comm_as[0]
+            comm_name=comm_a.text_content()
+            comm_code=comm_a.get("href").split("/")[2]
+            try:
+                commobj=Community.objects.get(code=comm_code)
+            except Community.DoesNotExist:
+                busszone_a=comm_as[2]
+                busszone_name=busszone_a.text_content()
+                busszone_code=busszone_a.get("href").split("/")[2]
+                try:
+                    busszoneobj=BussZone.objects.get(code=busszone_code)
+                    commobj=Community(busszone=busszoneobj,name=comm_name.encode('utf-8'),code=comm_code.encode('utf-8'),buildyear=build_year)
+                    commobj.save()
+                    print "community save.code=%s" % comm_code
+                except BussZone.DoesNotExist:
+                    dist_a=comm_as[1]
+                    dist_code=dist_a.get("href").split("/")[2]
+                    try:
+                        distobj=District.objects.get(code=dist_code)
+                        busszoneobj=BussZone(district=distobj,name=busszone_name.encode('utf-8'),code=busszone_code.encode('utf-8'))
+                        busszoneobj.save()
+                        commobj=Community(busszone=busszoneobj,name=comm_name.encode('utf-8'),code=comm_code.encode('utf-8'),buildyear=build_year)
+                        commobj.save()
+                        print "busszone save,name=%s.community save.name=%s" % (busszone_name,comm_name)
+                    except Exception, e:
+                        print "save busszone and community failed!busszone_code=%s,comm_code=%s" % (busszone_code,comm_code)
+                        continue
+        else:
+            print 'subtitle -a len !=3'
+                
         bs=d.find_class("subtitle")[0].findall("b")
         if len(bs)==3:
             b_second=bs[1]
@@ -232,23 +279,7 @@ def parseHouse(content):
                 area=int(areas[0])
             else:
                 area=0
-                
         
-        h3=d.find_class("house-info-col")[0].find("h3")
-        spans=h3.findall("span")
-        if len(spans)==3:
-            span_one=spans[0]
-            orien=span_one.text_content().strip()
-            
-            span_two=spans[1].text_content()
-            floor=span_two.split("/")[0]
-            allfloors=patt.findall(span_two.split("/")[1])
-            if len(allfloors)>0:
-                allfloor=int(allfloors[0])
-            else:
-                allfloor=0
-        
-            
         pattdate=re.compile(r"(\d{2}-\d{2} \d{2}:\d{2})")
         h4=d.find_class("house-info-col")[0].find("h4")
         pub_dates=pattdate.findall(h4.text_content())
