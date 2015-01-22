@@ -15,14 +15,15 @@ if __name__ == "__main__":
     
     from webcrawler.utils.CrawlerThread import WeatherThread,HouseThread
     
-    #天气抓取线程
-    wt=WeatherThread(23)
-    wt.setDaemon(True) 
-    wt.start()
+    if 'shell' not in sys.argv:
+        #天气抓取线程
+        wt=WeatherThread(23)
+        wt.setDaemon(True) 
+        wt.start()
     
-    #房屋抓取线程
-    ht=HouseThread(24)
-    ht.setDaemon(True) 
-    ht.start()
+        #房屋抓取线程
+        ht=HouseThread(24)
+        ht.setDaemon(True) 
+        ht.start()
     
     execute_from_command_line(sys.argv)

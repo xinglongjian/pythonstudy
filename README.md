@@ -18,3 +18,29 @@
    [http://pythonstudy-xinglongjian1.c9.io/](http://pythonstudy-xinglongjian1.c9.io/)
    
 
+##主要参考文档
+
+  ###Python2.7
+  
+  [https://docs.python.org/2.7/](https://docs.python.org/2.7/)
+  
+  ###Numpy and Scipy
+  
+  [http://docs.scipy.org/doc/](http://docs.scipy.org/doc/)
+  
+  ###Pandas
+  
+  [http://pandas.pydata.org/pandas-docs/stable/index.html](http://pandas.pydata.org/pandas-docs/stable/index.html)
+  
+  ###scikit-learn
+  
+  [http://scikit-learn.org/stable/documentation.html](http://scikit-learn.org/stable/documentation.html)
+  
+  ###EChart
+  
+  [http://echarts.baidu.com/doc/doc.html](http://echarts.baidu.com/doc/doc.html)
+  
+  ###Bootstrap3
+  
+  [http://v3.bootcss.com/css/](http://v3.bootcss.com/css/)
+  [http://v3.bootcss.com/components/](http://v3.bootcss.com/components/)
