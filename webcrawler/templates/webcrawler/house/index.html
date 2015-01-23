@@ -183,18 +183,25 @@
             </div>
         </div>
     </div>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div id="houseEchart" style="height:400px"></div>
+        </div>
+    </div>
 </div> 
 {% endblock %}
 
 {% block jslink %}
 <script src="{% static "plugins/jquery_DataTable/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/echarts/dist/echarts.js" %}"></script>
 <script src="{% static "js/housetable.js" %}"></script>
 {% endblock %}
 
 {% block jsscript %}
 <script type="text/javascript">
+    priceurl="{% url 'webcrawler:getSingleHouseJson' %}";
     jQuery(document).ready(function() {
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null,null,null,null,null);
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",null,null,null,null,null,null,null,null,null,"{% url 'webcrawler:getSingleHouseJson' %}");
     });
     
     $("#searchBtn").on('click',function(){
@@ -207,7 +214,7 @@
         var price=$("#priceselect option:selected").val();
         var sortcolumn=$("#sortcolumnselect option:selected").val();
         var sorttype=$("#sorttypeselect option:selected").val();
-        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype);
+        HouseEditable.init("{% url 'webcrawler:getHouseJosn' %}",bzid,commid,room,liveroom,orien,area,price,sortcolumn,sorttype,"{% url 'webcrawler:getSingleHouseJson' %}");
     });
     
     /**

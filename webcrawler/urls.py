@@ -13,4 +13,6 @@ urlpatterns=patterns('',
      url(r'^getHouseJosn/',views.getHouseJosn,name='getHouseJosn'),
      url(r'^getBussZoneJson/',views.getBussZoneJson,name='getBussZoneJson'),
      url(r'^getCommunityJson/',views.getCommunityJson,name='getCommunityJson'),
+     url(r'^getSingleHouseJson/',views.getSingleHouseJson,name='getSingleHouseJson'),
+     
     )

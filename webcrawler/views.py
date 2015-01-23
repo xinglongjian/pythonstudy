@@ -250,3 +250,14 @@ def getCommunityJson(request):
         datalist.append(itemlist)
     data={"data":datalist}
     return JsonResponse(data,safe=False)
+    
+def getSingleHouseJson(request):
+    housecode=request.GET.get('housecode')
+    hobj=House.objects.get(code=housecode)
+    hpobjs=HousePrice.objects.filter(house=hobj).order_by("datetime")
+    
+    keys=[k.datetime for k in hpobjs]
+    values=[v.price for v in hpobjs]
+    legend=[hobj.code]
+    data={"keys":keys,"values":values,"legend":legend}
+    return JsonResponse(data,safe=False)

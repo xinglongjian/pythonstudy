@@ -295,7 +295,6 @@ def parseHouse(content):
         try:
             h=House.objects.get(code=house_code)
         except House.DoesNotExist:
-            print 'save house,%s,%s,%s,%s' % (commobj.name,house_code,orien,area)
             h=House(community=commobj,title=house_title.encode('utf-8'),code=house_code.encode('utf-8'),bedroom=bedroom,
             liveroom=liveroom,orien=orien.encode('utf-8'),floors=floor.encode('utf-8'),allfloors=allfloor,area=area)
             try:
