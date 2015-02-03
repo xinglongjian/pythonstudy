@@ -259,6 +259,8 @@ def parseHouse(content):
                     except Exception, e:
                         print "save busszone and community failed!busszone_code=%s,comm_code=%s" % (busszone_code,comm_code)
                         continue
+            except Community.MultipleObjectsReturned:
+                print "commity has more than one: %s" % comm_code
         else:
             print 'subtitle -a len !=3'
                 
@@ -306,11 +308,14 @@ def parseHouse(content):
             hPrice=HousePrice(house=h,price=price,datetime=publisdate)
             hPrice.save()
         try:
-            print 'save houde price,%s,%s,%s'% (h.code,price,publisdate)
-            hPrice=HousePrice.objects.get(house=h,price=price,datetime=publisdate)
-        except HousePrice.DoesNotExist:
-            print 'save house second'
-            hPrice=HousePrice(house=h,price=price,datetime=publisdate)
-            hPrice.save()
+            hPrice=HousePrice.objects.filter(house=h).order_by("-datetime")[0]
+            if hPrice.price!=price:
+                newPrice=HousePrice(house=h,price=price,datetime=publisdate)
+                newPrice.save()
+                print 'save house second'
+            else:
+                print 'do\'t need to save price'
+        except Exception,e:
+            print e
         #print 'save over'
         

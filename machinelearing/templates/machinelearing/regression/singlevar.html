@@ -1,4 +1,5 @@
 {% extends "home/base.html" %}
+{% load staticfiles %}
 {% block leftContent %}
 <div class="col-md-3 col-sm-3 feature-text">
     <div class="panel panel-default">
@@ -15,9 +16,175 @@
 {% endblock %}
 {% block rightContent %}
 <div class="col-md-9 col-sm-9">
-    <div class="jumbotron">
-        <h3>单变量回归:</h3>
-        <p></p>
+    <div class="panel panel-primary">
+        <div class="panel-heading">房屋价格线性回归测试</div>
+        <div class="panel-body">
+             <div class="panel panel-primary">
+               <div class="panel-body">
+                  <form class="form-inline" role="form">
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">城区:</div>
+                     <select class="form-control" id="districtselect" onclick="busszoneselect()">
+                         <option value="null">不限</option>
+                         {% if districts %}
+                         {% for c in districts %}
+                         <option value="{{c.id}}">{{c.name}}</option>
+                         {% endfor %}
+                         {% endif%}
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">商圈:</div>
+                     <select class="form-control" id="bzselect" onclick="communityselect()">
+                         <option value="null">不限</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">小区:</div>
+                     <select class="form-control" id="commselect">
+                         <option value="null">不限</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">卧室:</div>
+                     <select class="form-control" id="roomselect">
+                         <option value="3">3居室</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">朝向:</div>
+                     <select class="form-control" id="orienselect">
+                         <option value="南北">南北</option>
+                      </select>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <div class="input-group">
+                     <div class="input-group-addon">面积:</div>
+                     <select class="form-control" id="areaselect">
+                         <option value="null">不限</option>
+                         <option value="0,50">50平以下</option>
+                         <option value="50,70">50-70平</option>
+                         <option value="70,90">70-90平</option>
+                         <option value="90,110">90-110平</option>
+                         <option value="110,130">110-130平</option>
+                         <option value="130,150">130-150平</option>
+                         <option value="150,200">150-200平</option>
+                         <option value="200,300">200-300平</option>
+                         <option value="300,500">300-500平</option>
+                         <option value="500,1000">500-1000平</option>
+                      </select>
+                 </div>
+              </div>
+             <button type="button" id="searchBtn" class="btn btn-primary">筛选</button>
+            </form>
+               </div>
+             </div>
+             
+             <div class="panel panel-primary">
+               <div class="panel-body">
+                   <img id="singlehouseimg" src="{% static 'plot/house/singlehouse.png'%}"></img>
+               </div>
+             </div>
+        </div><!--panel-body-->
     </div>
 </div> 
+{% endblock %}
+
+{% block jslink %}
+<script src="{% static "plugins/echarts/dist/echarts.js" %}"></script>
+{% endblock %}
+
+{% block jsscript %}
+<script type="text/javascript">
+    $("#searchBtn").on('click',function(){
+        var bzid=$("#bzselect option:selected").val();
+        var commid=$("#commselect option:selected").val();
+        var room=$("#roomselect option:selected").val();
+        var orien=$("#orienselect option:selected").val();
+        var area=$("#areaselect option:selected").val();
+        
+        if(bzid=='null')
+          alert("至少选择一个商圈!");
+        $.ajax({
+            url:"{% url 'ml:singlehouse'%}",
+            type:"get",
+            data:{"bzid":bzid,"commid":commid,"room":room,"orien":orien,"area":area},
+            dataType:'json',
+            success:function(data){
+                if(data.flag=='true')
+                {
+                    $("#singlehouseimg").attr("src","{% static 'plot/house/singlehouse.png'%}");
+                }
+               else
+               {
+                   alert("没有记录！");
+               }
+            }
+        });
+    });
+    
+    /**
+     * 商圈下拉列表
+     */
+    function busszoneselect()
+    {
+        disId=$("#districtselect option:selected").val();
+        $.ajax({
+            url:"{% url 'webcrawler:getBussZoneJson'%}",
+            type:"get",
+            data:{"disId":disId},
+            dataType:'json',
+            success:function(data){
+                if(data.data)
+                {
+                    var items=data.data;
+                    var options="<option value=\"null\">不限</option>";
+                    for(var i=0;i<items.length;i++)
+                    {
+                        var item=items[i];
+                        options=options.concat("<option value='"+item[0]+"'>"+item[1]+"</option>")
+                    }
+                    $("#bzselect").html(options);
+                }
+            }
+        });
+    }
+    /**
+     * 小区下拉列表
+     */
+    function communityselect()
+    {
+        bzId=$("#bzselect option:selected").val();
+        $.ajax({
+            url:"{% url 'webcrawler:getCommunityJson'%}",
+            type:"get",
+            data:{"bzId":bzId},
+            dataType:'json',
+            success:function(data){
+                if(data.data)
+                {
+                    var items=data.data;
+                    var options="<option value=\"null\">不限</option>";
+                    for(var i=0;i<items.length;i++)
+                    {
+                        var item=items[i];
+                        options=options.concat("<option value='"+item[0]+"'>"+item[1]+"</option>")
+                    }
+                    $("#commselect").html(options);
+                }
+            }
+        });
+    }
+    
+</script>
 {% endblock %}

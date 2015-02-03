@@ -22,12 +22,12 @@
             <li class="{% ifequal menu 'webcrawler' %}active{% endifequal %}">
                 <a href="{% url 'webcrawler:index' %}">Web爬虫</a>
             </li>
-            <li class="dropdown">
+            <li class="dropdown {% ifequal menu 'machinelearing' %}active{% endifequal %}">
                 <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">机器学习<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li class="{% ifequal menu 'classification' %}active{% endifequal %}"><a href="{% url 'ml:classindex' %}">Classification</a></li>
-                  <li class="{% ifequal menu 'regression' %}active{% endifequal %}"><a href="{% url 'ml:regreindex' %}">Regression</a></li>
-                  <li class="{% ifequal menu 'clustering' %}active{% endifequal %}"><a href="{% url 'ml:clusterindex' %}">Clustering</a></li>
+                  <li class="{% ifequal dropmenu 'regression' %}active{% endifequal %}"><a href="{% url 'ml:regreindex' %}">Regression</a></li>
+                <!--  <li class="{% ifequal dropmenu 'classification' %}active{% endifequal %}"><a href="{% url 'ml:classindex' %}">Classification</a></li>
+                  <li class="{% ifequal dropmenu 'clustering' %}active{% endifequal %}"><a href="{% url 'ml:clusterindex' %}">Clustering</a></li>-->
                 </ul>
             </li>
             <li class="dropdown">

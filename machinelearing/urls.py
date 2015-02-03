@@ -11,6 +11,7 @@ urlpatterns=patterns('',
     #====================Regression===============================
     url(r'^regreindex/',views.regreindex,name='regreindex'),
     url(r'^singlevar/',views.singlevar,name='singlevar'),
+    url(r'^singlehouse/',views.singlehouse,name='singlehouse'),
     url(r'^multivar/',views.multivar,name='multivar'),
     url(r'^polynomial/',views.polynomial,name='polynomial'),
     
