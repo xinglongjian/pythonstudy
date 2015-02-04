@@ -135,7 +135,8 @@
             success:function(data){
                 if(data.flag=='true')
                 {
-                    $("#singlehouseimg").attr("src","{% static 'plot/house/singlehouse.png'%}");
+                    var d = new Date();
+                    $("#singlehouseimg").attr("src","{% static 'plot/house/singlehouse.png'%}"+"?"+d.getTime());
                 }
                else
                {
